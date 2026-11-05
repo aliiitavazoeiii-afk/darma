@@ -25,7 +25,8 @@ try{
     assert(/<html[^>]*lang="fa"[^>]*dir="rtl"/.test(r.html),route+" must render fa RTL");
     assert((r.html.match(/<h1\b/g)||[]).length===1,route+" must have exactly one H1");
     assert(/<title>/.test(r.html)&&/name="description"/.test(r.html),route+" metadata missing");
-    assert(/rel="canonical"[^>]*href="https:\/\/darmawear\.ir\//.test(r.html),route+" canonical missing");
+    const canonical=(r.html.match(/<link\b[^>]*>/g)||[]).find(tag=>/rel="canonical"/.test(tag));
+    assert(canonical && /href="https:\/\/darmawear\.ir(?:\/[^"]*)?"/.test(canonical),route+" canonical missing: "+String(canonical));
     assert(/name="robots"[^>]*content="[^"]*noindex/.test(r.html),route+" must be noindex in staging");
   }
   const home=await read("/");
