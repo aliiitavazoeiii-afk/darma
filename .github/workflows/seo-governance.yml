@@ -22,6 +22,12 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Strict SEO governance and route contract
         run: npm run seo:static
+      - name: Verify premature public launch is rejected
+        run: |
+          if NEXT_PUBLIC_SITE_LIVE=true node scripts/release-guard.mjs; then
+            echo "::error::Unsafe public deployment was not blocked"
+            exit 1
+          fi
       - name: TypeScript safety
         run: npm run typecheck
       - name: Next.js production build
