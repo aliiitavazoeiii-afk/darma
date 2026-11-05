@@ -7,12 +7,13 @@ export default function robots(): MetadataRoute.Robots {
       rules: [{ userAgent: "*", disallow: "/" }]
     };
   }
+  const privatePaths = ["/checkout/", "/cart/", "/account/", "/search/", "/api/private/"];
   return {
     rules: [
-      { userAgent: "*", allow: "/", disallow: ["/checkout/", "/cart/", "/account/", "/search/", "/api/private/"] },
-      { userAgent: "Googlebot", allow: "/" },
-      { userAgent: "Bingbot", allow: "/" },
-      { userAgent: "OAI-SearchBot", allow: "/" }
+      { userAgent: "*", allow: "/", disallow: privatePaths },
+      { userAgent: "Googlebot", allow: "/", disallow: privatePaths },
+      { userAgent: "Bingbot", allow: "/", disallow: privatePaths },
+      { userAgent: "OAI-SearchBot", allow: "/", disallow: privatePaths }
     ],
     sitemap: SITE_URL + "/sitemap.xml",
     host: SITE_URL
