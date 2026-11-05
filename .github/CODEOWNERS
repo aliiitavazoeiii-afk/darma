@@ -1,0 +1,8 @@
+# Effective as required owner approval only when branch rules enable CODEOWNERS review.
+* @aliiitavazoeiii-afk
+/seo/ @aliiitavazoeiii-afk
+/app/ @aliiitavazoeiii-afk
+/lib/ @aliiitavazoeiii-afk
+/design/ @aliiitavazoeiii-afk
+/.github/workflows/ @aliiitavazoeiii-afk
+/scripts/ @aliiitavazoeiii-afk

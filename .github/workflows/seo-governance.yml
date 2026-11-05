@@ -1,14 +1,30 @@
-name: DARMA SEO governance
+name: DARMA SEO and build quality gate
 on:
-  push:
   pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
 jobs:
   seo-governance:
+    name: seo-governance
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NEXT_PUBLIC_SITE_LIVE: "false"
+      NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-      - name: Validate DARMA SEO constitution and production scaffold
-        run: node scripts/check-seo-governance.mjs
+          node-version: "22"
+      - name: Install declared dependencies
+        run: npm install --no-audit --no-fund
+      - name: Strict SEO governance and route contract
+        run: npm run seo:static
+      - name: TypeScript safety
+        run: npm run typecheck
+      - name: Next.js production build
+        run: npm run build
+      - name: Server-rendered SEO regression check
+        run: npm run seo:smoke
