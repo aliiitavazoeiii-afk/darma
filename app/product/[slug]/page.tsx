@@ -7,6 +7,9 @@ import { SITE_URL } from "@/lib/site";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
+// Reject unknown/unpublished slugs at the router level (true 404, not a streamed soft-404).
+export const dynamicParams = false;
+
 type Props = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ sku?: string }>;
