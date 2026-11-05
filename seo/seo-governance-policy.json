@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "project": "DARMA",
+  "approvedVisualSpec": "design/APPROVED_VISUAL_SPEC.md",
+  "rules": "seo/SEO_GEO_CONSTITUTION.md",
+  "primaryOrigin": "https://darmawear.ir",
+  "siteLanguage": "fa-IR",
+  "siteDirection": "rtl",
+  "launchStatus": "NOT_BUILT_NOT_DEPLOYED",
+  "allowedSearchCrawlers": [
+    "Googlebot",
+    "Bingbot",
+    "OAI-SearchBot"
+  ],
+  "noindexPaths": [
+    "/checkout",
+    "/cart",
+    "/account",
+    "/search",
+    "/staging"
+  ],
+  "requiredProductionFiles": [
+    "app/layout.tsx",
+    "app/robots.ts",
+    "app/sitemap.ts"
+  ],
+  "contentGuards": [
+    "real SKU and stock",
+    "no fictional claims",
+    "no fake ratings or reviews",
+    "no fabricated bestseller stats",
+    "truthful product photos",
+    "actual valid schema prices"
+  ],
+  "perfBudgets": {
+    "LCP_ms": 2500,
+    "INP_ms": 200,
+    "CLS": 0.1,
+    "lighthouseMobileGoal": 90
+  },
+  "aim": {
+    "monthsFromIndexableLaunch": [
+      4,
+      5
+    ],
+    "nonbrandTop10StretchTerms": [
+      3,
+      5
+    ],
+    "guaranteed": false
+  },
+  "note": "The current scripted check verifies only repository scaffolding, not live SEO performance. Exact component structure can be updated intentionally with explicit review."
+}
