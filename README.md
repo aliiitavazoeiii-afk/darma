@@ -11,6 +11,12 @@ High-end cinematic editorial fashion / luxury lingerie boutique, based on the FI
 
 Visual anchor: the LAST generated mockup, titled in conversation "a_cinematic_high_end_fashion_e_commerce_homepage.png" (1024 x 1536 reference). Image exists in the chat artifact; its binary is NOT yet stored in this GitHub repository. The image, not the text alone, is the authoritative source for pixel-level decisions. Upload the reference image to design/reference/approved-homepage.png before claiming pixel-perfect implementation.
 
+
+## Mandatory SEO + AI discoverability constitution (2026-11-05)
+All future code, products, articles, photos, metadata and deployments MUST comply with the repository-wide [SEO + AI Constitution](seo/SEO_GEO_CONSTITUTION.md). This includes [5-month execution roadmap](seo/FIVE_MONTH_EXECUTION.md), machine-readable [governance policy](seo/seo-governance-policy.json), and initial automated [GitHub SEO policy gate](.github/workflows/seo-governance.yml).
+
+The five-month ranking objective starts only on real public indexable launch. First-page rankings and AI recommendations are goals, not promises. No redesign of approved editorial visual identity is permitted to satisfy SEO: implement both requirements together.
+
 ## Documents
 - design/APPROVED_VISUAL_SPEC.md — exact art direction and layout, visual invariants.
 - design/tokens.json — sampled working color tokens (reference image is authoritative).
