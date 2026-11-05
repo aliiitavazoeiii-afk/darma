@@ -14,6 +14,8 @@ for (const file of [
  "scripts/seo-smoke.mjs"
 ]) needFile(file);
 need("lib/site.ts", /https:\/\/darmawear\.ir/, "Canonical domain may not change");
+need("package.json", /release-guard\.mjs && next build/, "Production build must be gated by release guard");
+need("scripts/release-guard.mjs", /NEXT_PUBLIC_SITE_LIVE/, "Release guard missing");
 need("app/layout.tsx", /<html\s+lang="fa"\s+dir="rtl">/, "Persian RTL required");
 need("app/layout.tsx", /metadataBase/, "Metadata base missing");
 need("app/layout.tsx", /SITE_LIVE/, "Noindex deployment toggle missing");

@@ -2,7 +2,7 @@
 
 Brand: DARMA / دارما — women's underwear
 Canonical future domain: https://darmawear.ir
-Project status: DESIGN LOCKED; SEO and photography planning; storefront NOT YET BUILT OR DEPLOYED.
+Project status: WORKING DEVELOPMENT STORE FRONTEND (build + SEO smoke passed); campaign/product image assets, real catalog, checkout, deployment and domain NOT YET READY.
 
 ## The only approved visual direction
 High-end cinematic editorial fashion / luxury lingerie boutique, based on the FINAL USER-APPROVED reference image from the 2026-11-05 conversation, not the previous COS/ARKET sketch, not standard WordPress/WooCommerce section grids.
@@ -44,3 +44,25 @@ Preferred candidate: Next.js App Router, TypeScript, server-rendered public cata
 
 ## Recovery
 Old repository content was preserved on branch backup/pre-editorial-redesign-2026-11-05 at commit f1555cc96b525add63fbce5fa206569004c6af7f before replacing the default branch tree.
+
+
+## Development build — 2026-11-05
+The Next.js 16 implementation is now in app/, components/, lib/; styling in app/globals.css.
+Current routes: /, /shop, /shop/lace, /shop/everyday, /shop/packs, /shop/comfort, /magazine, /about, /contact. Unpublished products return a hard 404. All routes are noindex by default.
+
+Local run with Node.js 22:
+```sh
+npm install
+cp .env.example .env.local
+npm run dev
+```
+Quality gate before every change:
+```sh
+npm run seo:static
+npm run typecheck
+npm run build
+npm run seo:smoke
+```
+For release, run the separate guard (npm run release:check) with all authorized and verified production inputs. See seo/DEPLOYMENT_PROTECTION.md.
+
+**IMPORTANT:** The Next.js code is a working *layout prototype*, not a full commerce system or approved photorealistic visual recreation. Image placeholders remain until genuine product/brand photography is added. Do not enable NEXT_PUBLIC_SITE_LIVE=true or point DNS to it yet.
