@@ -16,3 +16,9 @@ Status: APPROVED BY OWNER 2026-11-05. Do not introduce visual redesigns without 
 12. SEO, accessibility, performance, checkout trust, image optimization and mobile are release blockers.
 13. Old site source was intentionally replaced after an archival branch. Do not bring it back as styling scaffolding.
 14. Deploy domain darmawear.ir only after ownership, DNS, host, certificates and checkout flows are verified.
+
+## Mandatory SEO and AI discoverability constitution
+
+EVERY implementation, page, product, blog post, campaign and release MUST comply with [seo/SEO_GEO_CONSTITUTION.md](../seo/SEO_GEO_CONSTITUTION.md) and [seo/seo-governance-policy.json](../seo/seo-governance-policy.json). This applies alongside and without changing the user's approved visual design.
+
+The CI job .github/workflows/seo-governance.yml enforces initial file/metadata scaffold requirements only, not real search eligibility. Production must also pass manual and rendered-page checks documented in the SEO constitution. The 4-5 month goal begins after actual public indexable launch; search rank and AI inclusion are never guaranteed.
