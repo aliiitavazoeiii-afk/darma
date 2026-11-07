@@ -137,6 +137,15 @@ for(const c of collections){
 const initial = await api("GET","/items/darma_content?limit=1");
 const rows=Array.isArray(initial)?initial:(initial?[initial]:[]);
 if(rows.length===0) {
+  // First install only: studio identity aligned with DARMA's existing espresso palette.
+  // Never overwrite project settings once the owner has begun editing.
+  await api("PATCH","/settings",{
+    project_name:"DARMA STUDIO",
+    project_descriptor:"پنل مدیریت محتوای دارما",
+    project_color:"#352724",
+    default_language:"fa-IR",
+    default_appearance:"dark"
+  });
   await api("POST","/items/darma_content",{
     hero_eyebrow:"PREMIUM UNDERWEAR",
     hero_subtitle:"لباس زیر زنانه دارما؛ سادگی، راحتی و طراحی مدرن.",
