@@ -1,31 +1,28 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { publishedProduct, publishedProducts } from "@/lib/catalog";
+import { getCmsPublishedProduct } from "@/lib/cms-products";
 import { JsonLd, seoMetadata } from "@/lib/metadata";
 import { SITE_URL } from "@/lib/site";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
-// Reject unknown/unpublished slugs at the router level (true 404, not a streamed soft-404).
-export const dynamicParams = false;
+// Only owner-verified products are routed. Unknown/unpublished slugs return a genuine 404.
+export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ sku?: string }>;
 };
 
-export function generateStaticParams() {
-  return publishedProducts().map((product) => ({ slug: product.slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = publishedProduct(slug);
+  const product = await getCmsPublishedProduct(slug);
   if (!product) return { robots: { index: false, follow: false } };
   return seoMetadata({
-    title: product.title,
-    description: product.description,
+    title: product.seoTitle??product.title,
+    description: product.seoDescription??product.description,
     path: "/product/" + product.slug,
     indexable: Boolean(product.image && product.variants.length && product.variants.every((v) => v.priceIrr !== null && v.priceIrr > 0))
   });
@@ -34,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProductPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const { sku } = await searchParams;
-  const product = publishedProduct(slug);
+  const product = await getCmsPublishedProduct(slug);
   if (!product) notFound();
   const current = product.variants.find((variant) => variant.sku === sku) ?? product.variants[0];
   const canShowOffers = Boolean(product.image && product.variants.length && product.variants.every((v) => v.sku && v.priceIrr !== null && v.priceIrr > 0));
@@ -52,6 +49,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
             <Link href="/">خانه</Link><span>/</span><Link href="/shop">فروشگاه</Link><span>/</span><span>{product.title}</span>
           </nav>
           <h2>مشخصات و انتخاب مدل</h2>
+          {product.image&&<img className="darma-product-photo" src={product.image} alt={product.title} loading="eager" decoding="async"/>}
           {product.material && <p>جنس پارچه: {product.material}</p>}
           <div className="product-variants">
             {product.variants.map((variant) => (
@@ -62,7 +60,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
               </Link>
             ))}
           </div>
-          <p className="note-panel">پرداخت و موجودی تا اتصال به سامانه واقعی و آزمایش درگاه فعال نمی‌شوند.</p>
+          <p className="note-panel">اطلاعات قیمت و موجودی فقط برای مدل‌های تأییدشده نمایش داده می‌شوند؛ سفارش و پرداخت آنلاین تا تکمیل درگاه فعال نیست.</p>
         </div>
       </main>
       <SiteFooter />
