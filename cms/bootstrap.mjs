@@ -41,7 +41,7 @@ const persianLabels={
  material:"نوع پارچه",category_slug:"شناسه مجموعه",verified:"اطلاعات تأیید شده",
  seo_title:"عنوان سئو",seo_description:"توضیح متا",
  product_slug:"شناسه محصول",sku:"شناسه SKU",size:"سایز",color:"رنگ",
- pack_count:"تعداد در بسته",price_irr:"قیمت به ریال",stock_qty:"موجودی عددی",
+ pack_count:"تعداد در بسته",price_irr:"قیمت به ریال (برای سیستم)",price_toman:"قیمت فروش به تومان",stock_qty:"موجودی عددی",
  price_verified:"قیمت تأیید شده",stock_verified:"موجودی تأیید شده",enabled:"فعال",
  order_number:"شماره سفارش",customer_name:"نام مشتری",customer_phone:"شماره تماس مشتری",
  shipping_address:"آدرس ارسال",total_irr:"مبلغ کل به ریال",payment_status:"وضعیت پرداخت",
@@ -51,9 +51,21 @@ const persianLabels={
 const translation=(name)=>persianLabels[name]?
   [{language:"en-US",translation:persianLabels[name]},{language:"fa-IR",translation:persianLabels[name]}]:[];
 
+const choices={
+ status:[["پیش‌نویس","draft"],["منتشرشده","published"]],
+ size:[["M","M"],["L","L"],["XL","XL"],["XXL","XXL"],["XXXL","XXXL"]],
+ payment_status:[["در انتظار پرداخت","pending"],["پرداخت شده","paid"],["ناموفق","failed"],["بازپرداخت شده","refunded"]],
+ fulfillment_status:[["سفارش جدید","new"],["در حال پردازش","processing"],["ارسال شده","shipped"],["تحویل شده","delivered"],["لغو شده","cancelled"]],
+ source:[["سایت","website"],["ثبت دستی","manual"],["سایر","other"]]
+};
 const field=(name,type,ui="input",note)=>({
   field:name,type,
-  meta:{interface:ui,translations:translation(name), ...(note ? {note} : {})}
+  meta:{
+    interface:choices[name]?"select-dropdown":ui,
+    ...(choices[name]?{options:{choices:choices[name].map(([text,value])=>({text,value}))}}:{}),
+    translations:translation(name),
+    ...(note ? {note} : {})
+  }
 });
 const text=(name,note)=>field(name,"text","input-multiline",note);
 const str=(name,note)=>field(name,"string","input",note);
@@ -89,7 +101,7 @@ const collections=[
   ]},
   {name:"darma_variants",label:"تنوع و قیمت‌ها",icon:"sell",note:"Real SKU variants; IRR prices (rials) and verified stock, NOT Toman.",fields:[
     str("product_slug"),str("sku"),str("size"),str("color"),num("pack_count"),
-    num("price_irr"),num("stock_qty"),yes("price_verified"),yes("stock_verified"),yes("enabled")
+    num("price_toman","قیمت را به تومان وارد کن. سایت خودش آن را به ریال تبدیل می‌کند."),num("price_irr","اختیاری: برای اتصال API. اگر قیمت تومان وارد شده، همان مرجع است."),num("stock_qty"),yes("price_verified"),yes("stock_verified"),yes("enabled")
   ]},
   {name:"darma_orders",label:"سفارش‌ها",icon:"shopping_cart",note:"Order tracking data model. Automatic checkout and payment callbacks are NOT connected yet.",fields:[
     str("order_number"),str("customer_name"),str("customer_phone"),
