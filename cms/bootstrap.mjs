@@ -19,48 +19,74 @@ async function api(method, path, data, optional404 = false) {
   return raw ? JSON.parse(raw).data : null;
 }
 
+
+const persianLabels={
+ hero_eyebrow:"برچسب انگلیسی هیرو",hero_subtitle:"متن اصلی هیرو",hero_cta_label:"عنوان دکمه هیرو",
+ hero_image:"تصویر هیرو دسکتاپ",hero_mobile_image:"تصویر هیرو موبایل",
+ daily_eyebrow:"برچسب تخفیف امروز",daily_title:"تیتر تخفیف امروز",daily_text:"توضیح تخفیف امروز",
+ daily_image:"تصویر تخفیف امروز",daily_cta_label:"دکمه تخفیف امروز",
+ best_eyebrow:"برچسب منتخب دیجی‌کالا",best_title:"تیتر منتخب دیجی‌کالا",
+ best_text:"توضیح منتخب دیجی‌کالا",best_image:"تصویر منتخب دیجی‌کالا",best_cta_label:"دکمه منتخب دیجی‌کالا",
+ collections_title:"تیتر مجموعه‌ها",collections_text:"متن معرفی مجموعه‌ها",
+ magazine_title:"تیتر مجله",magazine_text:"متن معرفی مجله",
+ slug:"شناسه آدرس",name:"عنوان",eyebrow:"برچسب انگلیسی",description:"توضیحات",
+ image:"تصویر",visible:"نمایش در سایت",sort_index:"ترتیب نمایش",
+ title:"عنوان",summary:"خلاصه",body:"متن مقاله",status:"وضعیت انتشار",
+ material:"نوع پارچه",category_slug:"شناسه مجموعه",verified:"اطلاعات تأیید شده",
+ seo_title:"عنوان سئو",seo_description:"توضیح متا",
+ product_slug:"شناسه محصول",sku:"شناسه SKU",size:"سایز",color:"رنگ",
+ pack_count:"تعداد در بسته",price_irr:"قیمت به ریال",stock_qty:"موجودی عددی",
+ price_verified:"قیمت تأیید شده",stock_verified:"موجودی تأیید شده",enabled:"فعال",
+ order_number:"شماره سفارش",customer_name:"نام مشتری",customer_phone:"شماره تماس مشتری",
+ shipping_address:"آدرس ارسال",total_irr:"مبلغ کل به ریال",payment_status:"وضعیت پرداخت",
+ fulfillment_status:"وضعیت ارسال",source:"منبع سفارش",notes:"یادداشت",created_at:"تاریخ ثبت",
+ product_title:"عنوان کالا",quantity:"تعداد",unit_price_irr:"قیمت واحد ریالی"
+};
+const translation=(name)=>persianLabels[name]?
+  [{language:"en-US",translation:persianLabels[name]},{language:"fa-IR",translation:persianLabels[name]}]:[];
+
 const field=(name,type,ui="input",note)=>({
   field:name,type,
-  meta:{interface:ui, ...(note ? {note} : {})}
+  meta:{interface:ui,translations:translation(name), ...(note ? {note} : {})}
 });
 const text=(name,note)=>field(name,"text","input-multiline",note);
 const str=(name,note)=>field(name,"string","input",note);
-const file=(name,note)=>({field:name,type:"uuid",meta:{interface:"file-image",special:["file"], ...(note?{note}:{})}});
+const file=(name,note)=>({field:name,type:"uuid",meta:{interface:"file-image",special:["file"],translations:translation(name), ...(note?{note}:{})}});
 const num=(name,note)=>field(name,"integer","input",note);
 const yes=(name,note)=>field(name,"boolean","boolean",note);
 
 const collections=[
-  {name:"darma_content",icon:"web",singleton:true,note:"Homepage wording and campaign photos. Layout and palette remain controlled by GitHub.",fields:[
+  {name:"darma_content",label:"مدیریت صفحه اصلی",icon:"web",singleton:true,note:"Homepage wording and campaign photos. Layout and palette remain controlled by GitHub.",fields:[
     str("hero_eyebrow"),text("hero_subtitle"),str("hero_cta_label"),
     file("hero_image","Main desktop homepage image"),file("hero_mobile_image","Optional separate mobile image"),
     str("daily_eyebrow"),str("daily_title"),text("daily_text"),file("daily_image"),str("daily_cta_label"),
     str("best_eyebrow"),str("best_title"),text("best_text"),file("best_image"),str("best_cta_label"),
     str("collections_title"),text("collections_text"),str("magazine_title"),text("magazine_text")
   ]},
-  {name:"darma_categories",icon:"category",note:"Four fixed editorial category positions; text and photos can be changed.",fields:[
+  {name:"darma_categories",label:"مجموعه‌های دارما",icon:"category",note:"Four fixed editorial category positions; text and photos can be changed.",fields:[
     str("slug","Use the existing category slug; editing slugs changes URLs."),
     str("name"),str("eyebrow"),text("description"),file("image"),
     num("sort_index"),yes("visible")
   ]},
-  {name:"darma_articles",icon:"article",note:"Magazine teasers; only published articles are used on the homepage.",fields:[
+  {name:"darma_articles",label:"مجله دارما",icon:"article",note:"Magazine teasers; only published articles are used on the homepage.",fields:[
     str("slug"),str("title"),text("summary"),text("body"),file("image"),
     str("status","draft | published"),num("sort_index")
   ]},
-  {name:"darma_products",icon:"checkroom",note:"Product drafts and approved catalog; publishing requires verified details.",fields:[
+  {name:"darma_products",label:"محصولات دارما",icon:"checkroom",note:"Product drafts and approved catalog; publishing requires verified details.",fields:[
     str("slug"),str("title"),text("description"),str("material"),str("category_slug"),
     file("image"),str("status","draft | published"),yes("verified"),
     str("seo_title"),text("seo_description")
   ]},
-  {name:"darma_variants",icon:"sell",note:"Real SKU variants; IRR prices (rials) and verified stock, NOT Toman.",fields:[
+  {name:"darma_variants",label:"تنوع و قیمت‌ها",icon:"sell",note:"Real SKU variants; IRR prices (rials) and verified stock, NOT Toman.",fields:[
     str("product_slug"),str("sku"),str("size"),str("color"),num("pack_count"),
     num("price_irr"),num("stock_qty"),yes("price_verified"),yes("stock_verified"),yes("enabled")
   ]},
-  {name:"darma_orders",icon:"shopping_cart",note:"Order tracking data model. Automatic checkout and payment callbacks are NOT connected yet.",fields:[
+  {name:"darma_orders",label:"سفارش‌ها",icon:"shopping_cart",note:"Order tracking data model. Automatic checkout and payment callbacks are NOT connected yet.",fields:[
     str("order_number"),str("customer_name"),str("customer_phone"),
     text("shipping_address"),num("total_irr"),str("payment_status"),
     str("fulfillment_status"),str("source"),text("notes"),str("created_at")
   ]},
-  {name:"darma_order_lines",icon:"receipt_long",note:"Line items for future order management; no test orders are inserted.",fields:[
+  {name:"darma_order_lines",label:"اقلام سفارش",icon:"receipt_long",note:"Line items for future order management; no test orders are inserted.",fields:[
     str("order_number"),str("sku"),str("product_title"),num("quantity"),num("unit_price_irr")
   ]}
 ];
@@ -82,7 +108,7 @@ for (const c of collections) {
   await api("POST","/collections",{
     collection:c.name,
     schema:{name:c.name},
-    meta:{icon:c.icon,note:c.note,singleton:!!c.singleton},
+    meta:{icon:c.icon,note:c.note,singleton:!!c.singleton,translations:[{language:"en-US",translation:c.label},{language:"fa-IR",translation:c.label}]},
     fields:c.fields
   });
   console.log("CREATED collection "+c.name);
