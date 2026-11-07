@@ -29,6 +29,12 @@ const persianLabels={
  best_text:"توضیح منتخب دیجی‌کالا",best_image:"تصویر منتخب دیجی‌کالا",best_cta_label:"دکمه منتخب دیجی‌کالا",
  collections_title:"تیتر مجموعه‌ها",collections_text:"متن معرفی مجموعه‌ها",
  magazine_title:"تیتر مجله",magazine_text:"متن معرفی مجله",
+ about_heading:"عنوان صفحه درباره ما",about_intro:"توضیح بالای درباره ما",
+ about_section_heading:"تیتر بخش داستان برند",about_section_text:"متن داستان برند",
+ contact_heading:"عنوان صفحه تماس",contact_intro:"توضیح بالای تماس",
+ contact_section_heading:"تیتر بخش راه‌های ارتباط",contact_section_text:"متن راه‌های ارتباط",
+ footer_about_text:"معرفی کوتاه برند در فوتر",footer_location_text:"توضیح موقعیت دارما",
+ shop_page_intro:"توضیح صفحه فروشگاه",magazine_page_intro:"توضیح بالای مجله",
  slug:"شناسه آدرس",name:"عنوان",eyebrow:"برچسب انگلیسی",description:"توضیحات",
  image:"تصویر",visible:"نمایش در سایت",sort_index:"ترتیب نمایش",
  title:"عنوان",summary:"خلاصه",body:"متن مقاله",status:"وضعیت انتشار",
@@ -61,7 +67,11 @@ const collections=[
     file("hero_image","Main desktop homepage image"),file("hero_mobile_image","Optional separate mobile image"),
     str("daily_eyebrow"),str("daily_title"),text("daily_text"),file("daily_image"),str("daily_cta_label"),
     str("best_eyebrow"),str("best_title"),text("best_text"),file("best_image"),str("best_cta_label"),
-    str("collections_title"),text("collections_text"),str("magazine_title"),text("magazine_text")
+    str("collections_title"),text("collections_text"),str("magazine_title"),text("magazine_text"),
+    str("about_heading"),text("about_intro"),str("about_section_heading"),text("about_section_text"),
+    str("contact_heading"),text("contact_intro"),str("contact_section_heading"),text("contact_section_text"),
+    text("footer_about_text"),text("footer_location_text"),
+    text("shop_page_intro"),text("magazine_page_intro")
   ]},
   {name:"darma_categories",label:"مجموعه‌های دارما",icon:"category",note:"Four fixed editorial category positions; text and photos can be changed.",fields:[
     str("slug","Use the existing category slug; editing slugs changes URLs."),
@@ -162,7 +172,19 @@ if(!rows.some(row=>row && row.id != null)) {
     collections_title:"مجموعه محصولات دارما",
     collections_text:"انتخابی ساده‌تر برای سلیقه و نیاز روزمره",
     magazine_title:"مجله دارما",
-    magazine_text:"راهنماها، انتخاب آگاهانه و شناخت پارچه"
+    magazine_text:"راهنماها، انتخاب آگاهانه و شناخت پارچه",
+    about_heading:"درباره دارما",
+    about_intro:"دارما؛ از جزئیات پارچه تا انتخاب محصول.",
+    about_section_heading:"هر انتخاب، یک تجربه",
+    about_section_text:"در دارما تلاش می‌کنیم معرفی محصول، انتخاب رنگ و سایز و شناخت بسته‌های چندعددی روشن و ساده باشد. در نسخه نهایی این صفحه، داستان تأییدشده برند، تصاویر واقعی فرایند تولید و اطلاعات ارتباطی اضافه می‌شود.",
+    contact_heading:"ارتباط با دارما",
+    contact_intro:"اطلاعات رسمی تماس و نشانی بعد از تأیید نهایی در این صفحه قرار می‌گیرد.",
+    contact_section_heading:"همراه دارما باشید",
+    contact_section_text:"راه‌های ارتباطی معتبر، شرایط پاسخ‌گویی و آدرس در مرحله آماده‌سازی هستند. از ثبت شماره، ایمیل یا نشانی ساختگی خودداری شده است.",
+    footer_about_text:"دارما، مجموعه‌ای از لباس زیر زنانه با تمرکز بر تجربه خرید روشن و معرفی دقیق مدل‌ها، رنگ‌ها و سایزها.",
+    footer_location_text:"نقشه پس از تأیید نشانی رسمی اضافه می‌شود.",
+    shop_page_intro:"مدل‌های لباس زیر زنانه دارما را در دسته‌بندی‌های مختلف ببینید. انتخاب محصول، سایز، رنگ و تعداد در بسته پس از اتصال کاتالوگ اصلی فعال خواهد شد.",
+    magazine_page_intro:"مطالب مفید برای انتخاب آگاهانه؛ نوشته‌شده بر اساس اطلاعات واقعی محصول و تجربه تولید."
   });
   console.log("SEEDED homepage text (approved default copy, no fictional price/image)");
 } else console.log("KEEP homepage copy/imagery (already set by editor)");
