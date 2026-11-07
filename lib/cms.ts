@@ -17,6 +17,7 @@ async function api(path:string):Promise<unknown> {
     return j?.data ?? null;
   } catch { return null; } // preserve existing shop fallback if CMS is restarting
 }
+export const privateCmsRead=api;
 const obj=(value:unknown):Record<string,unknown>|null=>
   value && typeof value==="object" && !Array.isArray(value)?value as Record<string,unknown>:null;
 const list=(value:unknown):Record<string,unknown>[] =>
@@ -95,9 +96,14 @@ export function publicCmsImage(id?:string):string|undefined {
 // may be served by the storefront media proxy. No direct CMS asset access in browser.
 export async function isApprovedHomepageImage(id:string):Promise<boolean>{
   if(!isImageId(id))return false;
-  const [home,categories,articles]=await Promise.all([getCmsHome(),getCmsCategories(),getCmsArticles()]);
+  const [home,categories,articles,products]=await Promise.all([
+    getCmsHome(),getCmsCategories(),getCmsArticles(),
+    api("/items/darma_products?fields=image,status,verified&filter[status][_eq]=published&filter[verified][_eq]=true&limit=200")
+  ]);
   return [home.hero_image,home.hero_mobile_image,home.daily_image,home.best_image,
-    ...categories.filter(c=>c.visible).map(c=>c.image),...articles.map(a=>a.image)].includes(id);
+    ...categories.filter(c=>c.visible).map(c=>c.image),...articles.map(a=>a.image),
+    ...list(products).filter(p=>p.verified===true && p.status==="published").map(p=>isImageId(p.image)?p.image:undefined)
+  ].includes(id);
 }
 
 export async function getCmsAsset(id:string):Promise<Response|null>{
