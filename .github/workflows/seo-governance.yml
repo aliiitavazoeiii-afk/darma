@@ -28,6 +28,8 @@ jobs:
             echo "::error::Unsafe public deployment was not blocked"
             exit 1
           fi
+      - name: Deployment installer shell syntax
+        run: bash -n deploy/install-preview.sh
       - name: TypeScript safety
         run: npm run typecheck
       - name: Next.js production build
