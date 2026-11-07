@@ -60,4 +60,13 @@ for (const media of ["public/media/hero-desktop.webp", "public/media/hero-mobile
   if (hex !== "66cfb4f1703070afff1c2e6343ba3ccc93ebc3e820ac0a0c8f9731317bc4e94f") bad("Approved hero image changed or missing: " + media);
 }
 
+// Standalone fresh-VPS installation contracts: keep startup and staging SEO safety enforced.
+for (const file of ["deploy/install-fresh.sh", "deploy/compose.fresh.yml", "deploy/Caddyfile.fresh"]) needFile(file);
+need("deploy/compose.fresh.yml", /"80:80"/, "Public HTTP port mapping missing on fresh VPS.");
+need("deploy/compose.fresh.yml", /"443:443"/, "Public HTTPS port mapping missing on fresh VPS.");
+need("deploy/Caddyfile.fresh", /X-Robots-Tag.*noindex/, "Staging must be noindex at the proxy.");
+need("deploy/install-fresh.sh", /NEXT_PUBLIC_SITE_LIVE=false/, "Fresh-VPS deploy must not index incomplete catalog.");
+// Preserve future production launch guard and approved product image checksum contract.
+need("deploy/install-fresh.sh", /HERO_SHA=/, "Verified approved hero asset required.");
+
 console.log("DARMA STRICT SEO SOURCE CHECK: PASS");

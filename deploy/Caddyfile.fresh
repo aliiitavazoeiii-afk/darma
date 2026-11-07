@@ -1,0 +1,12 @@
+# DARMA storefront preview (fresh isolated host)
+# Caddy automatically requests HTTPS after domain DNS resolves to this server.
+darmawear.ir {
+    encode zstd gzip
+    header {
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        X-Frame-Options "DENY"
+        X-Robots-Tag "noindex, nofollow"
+    }
+    reverse_proxy web:3000
+}

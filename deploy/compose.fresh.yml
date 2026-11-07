@@ -1,0 +1,42 @@
+# DARMA new-VPS deployment. This project owns ports 80/443 on an otherwise empty host.
+services:
+  web:
+    container_name: darmawear-store-web
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    env_file:
+      - ../.env.preview
+    environment:
+      NEXT_PUBLIC_SITE_LIVE: "false"
+    restart: unless-stopped
+    expose:
+      - "3000"
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.status===200?0:1)).catch(()=>process.exit(1))"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  caddy:
+    container_name: darmawear-store-caddy
+    image: caddy:2-alpine
+    depends_on:
+      web:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile.fresh:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  caddy_data:
+  caddy_config:
