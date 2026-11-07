@@ -114,6 +114,25 @@ for (const c of collections) {
   console.log("CREATED collection "+c.name);
 }
 
+
+// A true Directus Image/File input requires the registered many-to-one file
+// relationship, not just a UUID column; create it additively if absent.
+const existingRelations=await api("GET","/relations");
+if(!Array.isArray(existingRelations))throw new Error("Could not inspect Directus file relations");
+const relationKeys=new Set(existingRelations.map(r=>r.collection+"."+r.field));
+for(const c of collections){
+  for(const f of c.fields.filter(f=>f.meta?.special?.includes("file"))){
+    const key=c.name+"."+f.field;
+    if(relationKeys.has(key))continue;
+    await api("POST","/relations",{
+      collection:c.name,field:f.field,related_collection:"directus_files",
+      meta:{one_deselect_action:"nullify"},
+      schema:{on_delete:"SET NULL"}
+    });
+    console.log("FILE IMAGE RELATION "+key);
+  }
+}
+
 // Preserve the editor's changes on each subsequent deploy.
 const initial = await api("GET","/items/darma_content?limit=1");
 const rows=Array.isArray(initial)?initial:(initial?[initial]:[]);
