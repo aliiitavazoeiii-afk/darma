@@ -3,6 +3,8 @@ node_modules
 .next
 .env
 .env.*
+# Publish-safe template is required during the Docker build for SEO checks.
+!.env.example
 *.tar.gz
 *.zip
 *.log
