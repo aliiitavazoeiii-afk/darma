@@ -31,12 +31,16 @@ const nint=(value:unknown,min:number,max:number):number|null=>
 export async function getCmsPublishedProducts():Promise<PublicProduct[]>{
   const [rawProducts,rawVariants]=await Promise.all([
     privateCmsRead("/items/darma_products?fields=slug,title,description,material,category_slug,image,status,verified,seo_title,seo_description&filter[status][_eq]=published&filter[verified][_eq]=true&limit=250"),
-    privateCmsRead("/items/darma_variants?fields=product_slug,sku,size,color,pack_count,price_irr,stock_qty,price_verified,stock_verified,enabled&limit=3000")
+    privateCmsRead("/items/darma_variants?fields=product_slug,sku,size,color,pack_count,price_toman,price_irr,stock_qty,price_verified,stock_verified,enabled&limit=3000")
   ]);
   const variants=rows(rawVariants).flatMap(v=>{
     if(v.enabled!==true||v.price_verified!==true||v.stock_verified!==true) return [];
     const productSlug=slug(v.product_slug),sku=str(v.sku,96),size=str(v.size,25),color=str(v.color,40);
-    const packCount=nint(v.pack_count,1,50),priceIrr=nint(v.price_irr,1,2_000_000_000),stockQty=nint(v.stock_qty,0,1_000_000);
+    const packCount=nint(v.pack_count,1,50);
+    // Owner-friendly Toman field is authoritative when present; structured data remains IRR.
+    const priceToman=nint(v.price_toman,1,200_000_000);
+    const priceIrr=priceToman!==null?priceToman*10:nint(v.price_irr,1,2_000_000_000);
+    const stockQty=nint(v.stock_qty,0,1_000_000);
     if(!productSlug||!sku||!size||!color||packCount===null||priceIrr===null||stockQty===null)return [];
     return [{productSlug,sku,size,color,packCount,priceIrr,stockQty,inStock:stockQty>0}];
   });
