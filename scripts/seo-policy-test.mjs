@@ -38,6 +38,8 @@ need("app/globals.css", /\.hero--product/, "Approved white-brief hero styling mu
 need("app/globals.css", /\.collections__slats/, "Approved slanted collections must remain");
 need("app/globals.css", /\.daily__visual/, "Approved editorial daily deal must remain");
 need("app/globals.css", /\.bestseller__stage/, "Approved editorial bestseller must remain");
+needFile(".env.example");
+need(".dockerignore", /!\\.env\\.example/, "Docker build must include .env.example required by SEO checks");
 if (read(".env.example").includes("NEXT_PUBLIC_SITE_LIVE=true")) bad("Default indexing must remain disabled");
 function pages(dir) {
   if (!fs.existsSync(dir)) return [];
