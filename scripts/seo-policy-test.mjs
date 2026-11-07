@@ -31,9 +31,9 @@ need("app/product/[slug]/page.tsx", /priceCurrency":\s*"IRR"/, "Structured curre
 need("app/page.tsx", /JsonLd/, "Machine-readable brand entities missing");
 need("app/page.tsx", /Organization/, "Organization brand entity missing");
 need("app/page.tsx", /WebSite/, "WebSite brand entity missing");
-need("app/page.tsx", /hero-desktop\\.webp/, "Approved real hero asset must be referenced");
+need("app/page.tsx", /hero-desktop\.webp/, "Approved real hero asset must be referenced");
 need("app/page.tsx", /fetchPriority="high"/, "Hero LCP must request high priority");
-need("app/globals.css", /\\.hero--product/, "Approved white-brief hero styling must exist");
+need("app/globals.css", /\.hero--product/, "Approved white-brief hero styling must exist");
 need("app/globals.css", /\.collections__slats/, "Approved slanted collections must remain");
 need("app/globals.css", /\.daily__visual/, "Approved editorial daily deal must remain");
 need("app/globals.css", /\.bestseller__stage/, "Approved editorial bestseller must remain");
