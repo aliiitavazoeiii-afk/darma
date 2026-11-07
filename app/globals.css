@@ -268,7 +268,7 @@ h1,h2,h3,p{margin-top:0}
   .hero--product{min-height:835px;background:#f3e7db}
   .hero--product .hero__scene{background:#f0decc}
   .hero--product .hero__art{inset:100px 0 auto;height:420px}
-  .hero--product .hero__art img{object-fit:cover;object-position:center center}
+  .hero--product .hero__art img{object-fit:cover;object-position:83% center}
   .hero--product .hero__scene::after{
     background:linear-gradient(to bottom,transparent 0%,transparent 46%,#f3e7db 70%,#f3e7db 100%)
   }

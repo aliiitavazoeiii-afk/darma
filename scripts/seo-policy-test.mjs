@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Strict DARMA source-code SEO contract checks. Live content and rank still require auditing.
 import fs from "node:fs";
+import { createHash } from "node:crypto";
 import path from "node:path";
 const read = (file) => fs.readFileSync(file, "utf8");
 const bad = (msg) => { throw Error("SEO RULE VIOLATION: " + msg); };
@@ -51,4 +52,12 @@ for(const file of pages("app")){
   if(file!=="app/page.tsx"&&!/generateMetadata|export const metadata/.test(source)) bad("Dedicated metadata required: "+file);
   if(/href=["']#["']/.test(source)) bad("Dead placeholder link: "+file);
 }
+
+// Approved real DARMA hero artwork lock: assets must be in the repository, not manually supplied on the server.
+for (const media of ["public/media/hero-desktop.webp", "public/media/hero-mobile.webp"]) {
+  needFile(media);
+  const hex = createHash("sha256").update(fs.readFileSync(media)).digest("hex");
+  if (hex !== "66cfb4f1703070afff1c2e6343ba3ccc93ebc3e820ac0a0c8f9731317bc4e94f") bad("Approved hero image changed or missing: " + media);
+}
+
 console.log("DARMA STRICT SEO SOURCE CHECK: PASS");
