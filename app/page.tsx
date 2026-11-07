@@ -16,18 +16,22 @@ export default function Home() {
   return (
     <>
       <main>
-        <section className="hero" aria-labelledby="hero-title">
+        <section className="hero hero--product" aria-labelledby="hero-title">
           <SiteHeader overlay />
-          <div className="hero__scene" aria-hidden="true"><div className="hero__light"/><div className="hero__photo-slot"/></div>
+          <div className="hero__scene" aria-hidden="true">
+            <picture className="hero__art">
+              <source media="(max-width: 650px)" srcSet="/media/hero-mobile.webp" type="image/webp" />
+              <img src="/media/hero-desktop.webp" alt="" width={1672} height={941} loading="eager" fetchPriority="high" decoding="async" />
+            </picture>
+          </div>
           <div className="hero__content content-width">
             <div className="hero__copy">
               <span className="editorial-label">PREMIUM UNDERWEAR</span>
               <h1 id="hero-title" lang="en">DARMA</h1>
-              <p>لباس زیر زنانه؛ سادگی، راحتی و طراحی مدرن.</p>
+              <p>لباس زیر زنانه دارما؛ سادگی، راحتی و طراحی مدرن.</p>
               <Link href="/shop" className="button button--outline">مشاهده مجموعه <Icon name="arrow" size={17}/></Link>
               <div className="hero__pages" aria-hidden="true"><i/><i/><i/></div>
             </div>
-            <span className="hero__asset-note">محل عکاسی کمپین اصلی دارما</span>
           </div>
         </section>
 
