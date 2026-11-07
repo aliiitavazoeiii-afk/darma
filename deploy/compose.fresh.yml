@@ -38,7 +38,7 @@ services:
       - no-new-privileges:true
   cms:
     container_name: darmawear-admin
-    image: directus/directus:12.2.0
+    image: directus/directus:12.6.1
     env_file:
       - ../.env.cms
     restart: unless-stopped
