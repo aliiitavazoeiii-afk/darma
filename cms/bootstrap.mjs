@@ -65,9 +65,13 @@ const collections=[
   ]}
 ];
 
+// Directus intentionally returns 403 (not 404) for a non-existent individual collection.
+// Enumerate the admin-visible collection inventory instead of probing absent names.
+const knownCollections=await api("GET","/collections");
+if(!Array.isArray(knownCollections))throw new Error("Directus admin collection inventory unavailable");
+const existingCollections=new Set(knownCollections.map(c=>c.collection));
 for (const c of collections) {
-  const exists = await api("GET", "/collections/"+encodeURIComponent(c.name), undefined, true);
-  if (exists) {
+  if (existingCollections.has(c.name)) {
     console.log("KEEP collection "+c.name+" (no destructive migration)");
     // Missing fields are not silently added: require a reviewed migration in GitHub.
     const actual=await api("GET", "/fields/"+encodeURIComponent(c.name));
