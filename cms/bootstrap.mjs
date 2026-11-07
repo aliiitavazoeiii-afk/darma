@@ -136,7 +136,8 @@ for(const c of collections){
 // Preserve the editor's changes on each subsequent deploy.
 const initial = await api("GET","/items/darma_content?limit=1");
 const rows=Array.isArray(initial)?initial:(initial?[initial]:[]);
-if(rows.length===0) {
+// A Directus singleton with zero rows returns a default object containing id:null.
+if(!rows.some(row=>row && row.id != null)) {
   // First install only: studio identity aligned with DARMA's existing espresso palette.
   // Never overwrite project settings once the owner has begun editing.
   await api("PATCH","/settings",{
@@ -146,7 +147,7 @@ if(rows.length===0) {
     default_language:"fa-IR",
     default_appearance:"dark"
   });
-  await api("POST","/items/darma_content",{
+  await api("PATCH","/items/darma_content",{
     hero_eyebrow:"PREMIUM UNDERWEAR",
     hero_subtitle:"لباس زیر زنانه دارما؛ سادگی، راحتی و طراحی مدرن.",
     hero_cta_label:"مشاهده مجموعه",
