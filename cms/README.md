@@ -19,14 +19,19 @@ server-side rendering. No direct admin API token reaches the browser.
 | darma_categories | Names and photos for four editorial collection slots, while preserving fixed URLs and diagonal editorial design |
 | darma_articles | Published magazine teaser titles, short summaries and three editorial images |
 | darma_products | Verified product records and real product images; draft/published flags (catalog integration phase) |
-| darma_variants | SKU, size, color, pack count, price **in Iranian rials (IRR)**, verified stock (catalog integration phase) |
+| darma_variants | SKU, size, color, pack count, price **entered in Toman**, verified stock; storefront converts to IRR for Schema.org and displays Toman |
 | darma_orders | Manual order record tracking; checkout is NOT integrated |
 | darma_order_lines | Manually entered order lines; automatic checkout synchronization is NOT integrated |
 
 The public homepage currently fetches its copy and approved editorial photography
 from CMS on every server request, with fallback to existing GitHub-defined text/image
-when CMS is down. Product/order collections exist for the following integration phase
-but are NOT advertised as a working checkout.
+when CMS is down. Product records explicitly marked **published + verified**, with a nonempty title,
+description, and at least one enabled price/stock-verified SKU, appear on
+the `/shop` and `/product/<slug>` pages automatically, without a rebuild.
+Each variant price entered in `price_toman` overrides optional API-level
+`price_irr` and is converted x10 for IRR structured data. Unverified
+products/variants never become public. The checkout and payment flow remain
+DISABLED. Order tables are manual/admin-only until a tested checkout exists.
 
 ### Images: uploading and replacing
 Log in -> Files -> Upload image -> open `darma_content` -> select the relevant
@@ -101,3 +106,19 @@ separate GitHub PRs with comprehensive payment and SEO tests.
 Directus licensing should be assessed against the intended business use.
 Its current self-hosted Core tier and Open Innovation Grant conditions:
 https://directus.com/docs/self-hosting/overview
+
+## Editing real catalog prices (example; no fictional catalog rows created)
+1. Open **محصولات دارما**, create a real product with unique lowercase Latin slug,
+   verified description/image, set `verified=true` and `status=published`.
+2. Open **تنوع و قیمت‌ها**, add a matching `product_slug` with exact same slug,
+   its real `sku`, `size`, `color`, and `pack_count`.
+3. Enter `price_toman` as an integer amount in Toman (e.g., 670000 if that
+   is actually your verified selling price), `stock_qty` as real pieces
+   available and explicitly check `price_verified`, `stock_verified`, `enabled`.
+4. Save. The SSR shop will display the real verified product and price; all
+   public product pages and media still carry `noindex` in preview mode.
+5. Order collections are currently manual record-editing only; **never accept
+   live payments or customer orders on this preview**.
+
+Do not publish placeholders, invalid stock, scraped third-party prices or
+reviews, or invent available SKUs. Use true catalog data after owner approval.
