@@ -30,6 +30,14 @@ jobs:
           fi
       - name: Deployment installer shell syntax
         run: bash -n deploy/install-preview.sh
+      - name: Fresh VPS installation syntax
+        run: |
+          bash -n deploy/install-fresh.sh
+          test -s deploy/compose.fresh.yml
+          test -s deploy/Caddyfile.fresh
+          printf 'NEXT_PUBLIC_SITE_LIVE=false\n' > .env.preview
+          docker compose -p darmawear-store -f deploy/compose.fresh.yml config -q
+          rm -f .env.preview
       - name: TypeScript safety
         run: npm run typecheck
       - name: Next.js production build
