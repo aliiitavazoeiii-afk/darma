@@ -233,3 +233,51 @@ h1,h2,h3,p{margin-top:0}
   .inner-hero{padding:105px 5% 35px}
 }
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+
+
+/* 2026-11-07 approved real white-brief hero photo. Only this hero changes;
+   all downstream sections stay locked to the approved DARMA editorial direction. */
+.hero--product{
+  min-height:clamp(560px,46vw,800px);
+  background:#eddbc9;
+  color:#2d211d;
+}
+.hero--product .site-header{color:#30251f}
+.hero--product .site-header__inner{border-bottom-color:rgba(63,43,35,.24)}
+.hero--product .hero__scene{position:absolute;inset:0;background:#ead5bf}
+.hero--product .hero__scene::before{display:none}
+.hero--product .hero__scene::after{
+  background:linear-gradient(90deg,rgba(244,226,209,.12),transparent 57%);
+}
+.hero--product .hero__art{display:block;position:absolute;inset:0}
+.hero--product .hero__art img{
+  width:100%;height:100%;display:block;object-fit:cover;object-position:center 48%;
+}
+.hero--product .hero__copy{padding-block:clamp(145px,13vw,205px) 95px}
+.hero--product .hero__copy .editorial-label{color:#4b3b34}
+.hero--product h1{color:#2c211e;text-shadow:0 1px 0 #fff4}
+.hero--product p{color:#44352f;max-width:390px;line-height:2}
+.hero--product .button--outline{
+  border-color:#3c2d27;color:#352721;background:rgba(255,247,239,.17)
+}
+.hero--product .button--outline:hover{background:rgba(255,252,247,.6)}
+.hero--product .hero__pages i{background:#765b53;opacity:.42}
+.hero--product .hero__pages i:nth-child(2){background:#3b2824;opacity:1}
+@media (max-width:650px){
+  .hero--product{min-height:835px;background:#f3e7db}
+  .hero--product .hero__scene{background:#f0decc}
+  .hero--product .hero__art{inset:100px 0 auto;height:420px}
+  .hero--product .hero__art img{object-fit:cover;object-position:center center}
+  .hero--product .hero__scene::after{
+    background:linear-gradient(to bottom,transparent 0%,transparent 46%,#f3e7db 70%,#f3e7db 100%)
+  }
+  .hero--product .hero__content{align-items:flex-end;min-height:835px}
+  .hero--product .hero__copy{
+    padding:510px 5px 44px;
+    align-items:center;text-align:center;
+  }
+  .hero--product h1{font-size:clamp(72px,16vw,98px)}
+  .hero--product p{max-width:350px}
+  .hero--product .hero__pages{margin-top:25px}
+}
