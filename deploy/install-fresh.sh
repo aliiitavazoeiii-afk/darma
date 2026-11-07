@@ -11,7 +11,7 @@ for x in apt-get dpkg awk grep curl; do command -v "$x" >/dev/null || fail "Miss
 . /etc/os-release
 case "$ID" in ubuntu|debian) ;; *) fail "Only stock Ubuntu or Debian is supported, detected $ID.";; esac
 codename="$VERSION_CODENAME"
-if [[ "$ID" = "ubuntu" && -n "$UBUNTU_CODENAME" ]]; then codename="$UBUNTU_CODENAME"; fi
+if [[ "$ID" = "ubuntu" && -n "$(printenv UBUNTU_CODENAME || true)" ]]; then codename="$UBUNTU_CODENAME"; fi
 [[ -n "$codename" ]] || fail "Cannot determine OS release codename."
 APP=/opt/darmawear-store
 REPO=https://github.com/aliiitavazoeiii-afk/darma.git
