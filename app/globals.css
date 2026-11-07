@@ -281,3 +281,17 @@ h1,h2,h3,p{margin-top:0}
   .hero--product p{max-width:350px}
   .hero--product .hero__pages{margin-top:25px}
 }
+
+/* CMS controls media/content only. The locked brand composition and colors remain unchanged. */
+.bestseller__photo{
+  display:block;position:relative;z-index:4;
+  height:100%;width:min(100%,480px);
+  object-fit:contain;object-position:center;
+  filter:drop-shadow(0 24px 23px rgba(18,8,7,.30));
+}
+.collection-slat[style*="background-image"]{
+  background-position:center;background-size:cover;background-repeat:no-repeat;
+}
+.story__picture[style*="background-image"]{
+  background-position:center;background-size:cover;
+}
