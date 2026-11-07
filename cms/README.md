@@ -6,7 +6,7 @@ colors, spacing, editorial sections and GitHub SEO release gates. The admin is a
 **separate application** at https://admin.darmawear.ir/admin deployed on the SAME VPS,
 with a separate Postgres database and persistent upload volume.
 
-The Studio is provided by pinned Directus 12.2.0, **not WordPress**. No templates,
+The Studio is provided by pinned Directus 12.6.1, **not WordPress**. No templates,
 plugins or arbitrary HTML/CSS editors can modify the public Next.js page.
 Editor changes to the approved fields appear on the homepage automatically through
 server-side rendering. No direct admin API token reaches the browser.
