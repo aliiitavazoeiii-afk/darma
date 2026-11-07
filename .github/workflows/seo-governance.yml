@@ -44,3 +44,5 @@ jobs:
         run: npm run build
       - name: Server-rendered SEO regression check
         run: npm run seo:smoke
+      - name: Docker build parity with actual VPS deployment
+        run: docker build --progress=plain --file deploy/Dockerfile --tag darmawear-ci:${{ github.sha }} .
