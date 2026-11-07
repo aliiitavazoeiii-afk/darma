@@ -31,6 +31,9 @@ export type CmsHome={
   daily_eyebrow?:string;daily_title?:string;daily_text?:string;daily_image?:string;daily_cta_label?:string;
   best_eyebrow?:string;best_title?:string;best_text?:string;best_image?:string;best_cta_label?:string;
   collections_title?:string;collections_text?:string;magazine_title?:string;magazine_text?:string;
+  about_heading?:string;about_intro?:string;about_section_heading?:string;about_section_text?:string;
+  contact_heading?:string;contact_intro?:string;contact_section_heading?:string;contact_section_text?:string;
+  footer_about_text?:string;footer_location_text?:string;shop_page_intro?:string;magazine_page_intro?:string;
 };
 export type CmsCategory={slug:string;name?:string;eyebrow?:string;description?:string;image?:string;visible:boolean};
 export type CmsArticle={slug:string;title:string;summary?:string;image?:string};
@@ -39,7 +42,10 @@ const contentFields=[
  "hero_eyebrow","hero_subtitle","hero_cta_label","hero_image","hero_mobile_image",
  "daily_eyebrow","daily_title","daily_text","daily_image","daily_cta_label",
  "best_eyebrow","best_title","best_text","best_image","best_cta_label",
- "collections_title","collections_text","magazine_title","magazine_text"
+ "collections_title","collections_text","magazine_title","magazine_text",
+ "about_heading","about_intro","about_section_heading","about_section_text",
+ "contact_heading","contact_intro","contact_section_heading","contact_section_text",
+ "footer_about_text","footer_location_text","shop_page_intro","magazine_page_intro"
 ] as const;
 
 export async function getCmsHome():Promise<CmsHome> {
