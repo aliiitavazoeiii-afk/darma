@@ -4,6 +4,7 @@ import { collections } from "@/lib/catalog";
 import { seoMetadata } from "@/lib/metadata";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { getCmsHome } from "@/lib/cms";
 
 export const metadata: Metadata = seoMetadata({
   title: "مجموعه شورت زنانه دارما",
@@ -12,7 +13,8 @@ export const metadata: Metadata = seoMetadata({
   indexable: false
 });
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const copy=await getCmsHome();
   return (
     <>
       <SiteHeader />
@@ -20,7 +22,7 @@ export default function ShopPage() {
         <header className="inner-hero">
           <span className="editorial-label">THE COLLECTIONS</span>
           <h1>فروشگاه دارما</h1>
-          <p>مدل‌های لباس زیر زنانه دارما را در دسته‌بندی‌های مختلف ببینید. انتخاب محصول، سایز، رنگ و تعداد در بسته پس از اتصال کاتالوگ اصلی فعال خواهد شد.</p>
+          <p>{copy.shop_page_intro??"مدل‌های لباس زیر زنانه دارما را در دسته‌بندی‌های مختلف ببینید. انتخاب محصول، سایز، رنگ و تعداد در بسته پس از اتصال کاتالوگ اصلی فعال خواهد شد."}</p>
         </header>
         <div className="inner-body">
           <div className="inner-breadcrumbs"><Link href="/">خانه</Link><span>/</span><span>فروشگاه</span></div>
