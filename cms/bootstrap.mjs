@@ -121,10 +121,22 @@ const existingCollections=new Set(knownCollections.map(c=>c.collection));
 for (const c of collections) {
   if (existingCollections.has(c.name)) {
     console.log("KEEP collection "+c.name+" (no destructive migration)");
-    // Missing fields are not silently added: require a reviewed migration in GitHub.
+    // Only additive migrations from reviewed GitHub code are allowed.
+    // Existing CMS content and field data are never overwritten.
     const actual=await api("GET", "/fields/"+encodeURIComponent(c.name));
-    const have=new Set(actual.map(f=>f.field));
-    for(const f of c.fields) if(!have.has(f.field)) throw new Error("CMS schema drift: "+c.name+" missing "+f.field);
+    const existingFields=new Map(actual.map(field=>[field.field,field]));
+    for(const desired of c.fields){
+      const previous=existingFields.get(desired.field);
+      if(!previous){
+        await api("POST","/fields/"+encodeURIComponent(c.name),desired);
+        console.log("ADDED FIELD "+c.name+"."+desired.field);
+        continue;
+      }
+      if(previous.type!==desired.type){
+        throw new Error("CMS schema type mismatch; manual reviewed migration required: "+
+          c.name+"."+desired.field+" existing="+previous.type+" desired="+desired.type);
+      }
+    }
     continue;
   }
   await api("POST","/collections",{
