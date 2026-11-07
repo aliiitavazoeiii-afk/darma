@@ -7,3 +7,8 @@ dist
 .env.*.local
 *.tsbuildinfo
 .DS_Store
+
+# Private persistent CMS data and credentials are never source-controlled.
+backups/
+.env.cms
+.env.store

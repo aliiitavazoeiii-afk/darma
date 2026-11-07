@@ -281,3 +281,45 @@ h1,h2,h3,p{margin-top:0}
   .hero--product p{max-width:350px}
   .hero--product .hero__pages{margin-top:25px}
 }
+
+/* CMS controls media/content only. The locked brand composition and colors remain unchanged. */
+.bestseller__photo{
+  display:block;position:relative;z-index:4;
+  height:100%;width:min(100%,480px);
+  object-fit:contain;object-position:center;
+  filter:drop-shadow(0 24px 23px rgba(18,8,7,.30));
+}
+.collection-slat[style*="background-image"]{
+  background-position:center;background-size:cover;background-repeat:no-repeat;
+}
+.story__picture[style*="background-image"]{
+  background-position:center;background-size:cover;
+}
+
+/* Brand-locked collection listing; product photos and verified prices from Studio. */
+.darma-product-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:16px;margin:18px 0 32px;
+}
+.darma-product-tile{
+  background:#f8f2ee;border:1px solid rgba(69,45,40,.15);
+  padding:14px;display:flex;flex-direction:column;gap:8px;
+  transition:transform .2s ease,border-color .2s ease;color:#302321;
+}
+.darma-product-tile:hover{transform:translateY(-3px);border-color:rgba(69,45,40,.42)}
+.darma-product-tile img{
+  width:100%;height:228px;object-fit:contain;display:block;
+  background:#eee1d7;
+}
+.darma-product-tile strong{font-size:14px;font-weight:650;line-height:1.8}
+.darma-product-tile span{color:#68463d;font-size:12px}
+.darma-product-photo{
+  max-height:340px;max-width:min(460px,100%);
+  object-fit:contain;display:block;margin:16px auto 30px;
+  background:#f7ebe5;
+}
+@media(max-width:650px){
+  .darma-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .darma-product-tile{padding:9px}
+  .darma-product-tile img{height:155px}
+}

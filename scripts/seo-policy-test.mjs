@@ -71,4 +71,21 @@ need("deploy/install-fresh.sh", /NEXT_PUBLIC_SITE_LIVE=false/, "Fresh-VPS deploy
 // Preserve future production launch guard and approved product image checksum contract.
 need("deploy/install-fresh.sh", /HERO_SHA=/, "Verified approved hero asset required.");
 
+
+// Headless Studio may only supply content. Protected design markup and SEO remain in Next.js.
+need("app/page.tsx", /getCmsHome/, "Homepage must SSR the approved editorial CMS content");
+need("app/page.tsx", /force-dynamic/, "Homepage must update without rebuild when content changes");
+need("lib/cms.ts", /cache:"no-store"/, "CMS data must not be frozen in static HTML");
+need("app/api/media/[id]/route.ts", /isApprovedHomepageImage/, "Media must be allowlisted before streaming");
+need("app/api/media/[id]/route.ts", /Content-Security-Policy/, "CMS media responses must be sandboxed");
+need("deploy/compose.fresh.yml", /cms-db:/, "Private CMS database service missing");
+need("deploy/compose.fresh.yml", /cms_uploads:/, "Persistent CMS upload volume missing");
+need("deploy/compose.fresh.yml", /\.env\.store/, "Private server-only CMS read token missing");
+need("deploy/Caddyfile.fresh", /admin\.darmawear\.ir/, "Separate secure admin hostname missing");
+need("deploy/Caddyfile.fresh", /noarchive/, "Private management panel must never be indexed");
+needFile("cms/smoke.mjs");
+need("cms/bootstrap.mjs", /darma_orders/, "Order management schema missing");
+need("cms/bootstrap.mjs", /darma_variants/, "Variant pricing schema missing");
+need(".dockerignore", /backups\//, "CMS database backups must be excluded from Docker builds");
+
 console.log("DARMA STRICT SEO SOURCE CHECK: PASS");

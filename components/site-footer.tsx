@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { Icon } from "@/components/icons";
+import { getCmsHome } from "@/lib/cms";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const copy=await getCmsHome();
   return (
     <footer className="site-footer" id="about-darma">
       <div className="site-footer__landscape" aria-hidden="true" />
@@ -9,7 +11,7 @@ export function SiteFooter() {
         <div className="site-footer__map" role="note" aria-label="نقشه و موقعیت پس از تأیید نشانی افزوده می‌شود">
           <span className="editorial-label">OUR LOCATION</span>
           <strong>موقعیت دارما</strong>
-          <p>نقشه پس از تأیید نشانی رسمی اضافه می‌شود.</p>
+          <p>{copy.footer_location_text??"نقشه پس از تأیید نشانی رسمی اضافه می‌شود."}</p>
         </div>
         <div className="site-footer__service">
           <div><Icon name="feather" size={26}/><span>پشتیبانی</span><small>راه‌های تماس به‌زودی</small></div>
@@ -18,7 +20,7 @@ export function SiteFooter() {
         </div>
         <div className="site-footer__about">
           <h2>درباره دارما</h2>
-          <p>دارما، مجموعه‌ای از لباس زیر زنانه با تمرکز بر تجربه خرید روشن و معرفی دقیق مدل‌ها، رنگ‌ها و سایزها.</p>
+          <p>{copy.footer_about_text??"دارما، مجموعه‌ای از لباس زیر زنانه با تمرکز بر تجربه خرید روشن و معرفی دقیق مدل‌ها، رنگ‌ها و سایزها."}</p>
           <Link href="/about">بیشتر درباره ما <Icon name="arrow" size={16}/></Link>
         </div>
         <div className="site-footer__identity">

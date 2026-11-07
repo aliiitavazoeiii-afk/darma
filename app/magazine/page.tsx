@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { seoMetadata } from "@/lib/metadata";
+import { getCmsHome, getCmsArticles } from "@/lib/cms";
 
 export const metadata: Metadata = seoMetadata({
   title: "مجله دارما | راهنمای لباس زیر زنانه",
@@ -17,18 +18,19 @@ const topics = [
   { title: "راهنمای نگهداری", description: "اصول مراقبت و شست‌وشو متناسب با دستور سازنده" }
 ];
 
-export default function MagazinePage() {
+export default async function MagazinePage() {
+  const [copy,articles]=await Promise.all([getCmsHome(),getCmsArticles()]);
   return (
     <>
       <SiteHeader />
       <main className="inner-shell">
-        <header className="inner-hero"><span className="editorial-label">DARMA MAGAZINE</span><h1>مجله دارما</h1><p>مطالب مفید برای انتخاب آگاهانه؛ نوشته‌شده بر اساس اطلاعات واقعی محصول و تجربه تولید.</p></header>
+        <header className="inner-hero"><span className="editorial-label">DARMA MAGAZINE</span><h1>مجله دارما</h1><p>{copy.magazine_page_intro??"مطالب مفید برای انتخاب آگاهانه؛ نوشته‌شده بر اساس اطلاعات واقعی محصول و تجربه تولید."}</p></header>
         <div className="inner-body">
           <nav className="inner-breadcrumbs" aria-label="مسیر صفحه"><Link href="/">خانه</Link><span>/</span><span>مجله دارما</span></nav>
           <div className="article-topics">
-            {topics.map((topic) => <article className="article-topic" key={topic.title}><h2>{topic.title}</h2><p>{topic.description}</p></article>)}
+            {articles.length ? articles.map((topic) => <article className="article-topic" key={topic.slug}><h2>{topic.title}</h2><p>{topic.summary}</p></article>) : topics.map((topic) => <article className="article-topic" key={topic.title}><h2>{topic.title}</h2><p>{topic.description}</p></article>)}
           </div>
-          <p className="note-panel">این‌ها موضوعات برنامه‌ریزی‌شده‌اند، نه مقاله منتشرشده. متن و عکس نهایی پس از بررسی تخصصی و تأیید آماده می‌شود.</p>
+          {articles.length===0&&<p className="note-panel">این‌ها موضوعات برنامه‌ریزی‌شده‌اند، نه مقاله منتشرشده. متن و عکس نهایی پس از بررسی تخصصی و تأیید آماده می‌شود.</p>}
         </div>
       </main>
       <SiteFooter />

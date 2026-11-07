@@ -4,7 +4,7 @@
 The owner explicitly approved the last screenshot on 2026-11-05: "in awliye pallete rangesh hamechish okeye ... be hichish dast nazan".
 This document preserves the screenshot's layout logic. If a textual instruction conflicts with what the screenshot looks like, the approved screenshot wins. The binary screenshot is in the ChatGPT conversation at a_cinematic_high_end_fashion_e_commerce_homepage.png (1024x1536) and should be copied into the repo separately.
 
-No framework/theme should dictate the layout. Build unique components.
+No framework/theme should dictate the layout. Build unique components. Directus is a separate content backend, not a theme editor.
 
 ## Visual identity
 - Atmosphere: cinematic, editorial, intimate, premium, warm, serene, not commercial-mass-market.
@@ -20,9 +20,10 @@ No framework/theme should dictate the layout. Build unique components.
 Transparent/dark header over hero, DARMA brand centered, utility search/cart/favorite/user icons aligned left, right-side RTL nav: محصولات، پرفروش‌ها، جدیدترین‌ها، مجله دارما، درباره ما.
 Thin low-contrast bottom line. No announcement bar and no sticky white WordPress nav by default.
 
-### 02 Hero
-Edge-to-edge cinematic espresso scene. On the right: tasteful adult fashion model in ivory lace underwear with silk/sheer shirt, realistic window-slat light. On the left: small spaced PREMIUM UNDERWEAR, huge DARMA serif, concise Persian line, narrow outline CTA "مشاهده مجموعه", then three understated pagination dots. No text baked into hero photo: render accessible HTML overlay. Photo may NOT misrepresent sold garment type.
-Strong dark-to-light shadow contrast makes all text readable.
+### 02 Hero — revised owner approval 2026-11-07
+The latest approved main banner is the user's own white DARMA underwear product photographed on a warm ivory/cream backdrop, not a model. It is committed as `public/media/hero-desktop.webp` and `hero-mobile.webp` and is the protected fallback for the storefront.
+Preserve the current RIGHT-side product composition and LEFT-side editorial HTML overlay: small spaced PREMIUM UNDERWEAR, large DARMA serif logotype, Persian line and narrow outline CTA. Three unobtrusive pagination dots are visual styling only; do not invent a working slider.
+The CMS may swap the photographic backdrop and the selected copy, but NEVER rewrite the layout, palette, CSS, navigation or logo. Photos must accurately depict authentic DARMA products, not fabricated inventory or a different garment style.
 
 ### 03 Benefits strip
 Across the width directly below hero. Translucent deep-coffee glass/overlay, very fine dividers, thin-line icons + small Persian text: پارچه باکیفیت، راحتی روزانه، ماندگاری بالا، ارسال سریع. Claims subject to validation. Not separate white cards.
@@ -67,3 +68,11 @@ White template-style navbar; repeated "new arrivals" grids; generic 4-column equ
 ## Asset lock
 Source raster: the last approved generated screenshot, not earlier drafts.
 Until source image is committed, pixel-perfect matching cannot be independently verified from this repository alone. Do not claim exact visual parity without side-by-side screenshot review.
+
+## Independent editing panel — explicit boundaries (2026-11-07)
+- `admin.darmawear.ir` is a password-protected content/commerce editing surface.
+- Editors can change campaign photos and plain-text copy in fixed slots, plus metadata and draft product records.
+- ONLY GitHub PRs with the mandatory SEO check may change JSX components, CSS layout, typography, color tokens, cart/checkout code or schema contracts.
+- The page's ordered sections and branded editorial appearance are locked even if the CMS database is reset or offline; safe defaults stay in code.
+- Pricing/order collections are prepared for commerce integration but do not imply a connected payment gateway or live customer orders.
+- Never give editor-supplied HTML/script/style strings direct rendering or publish invented discounts, stock counts, ratings or prices.

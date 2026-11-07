@@ -4,6 +4,8 @@ import { collections } from "@/lib/catalog";
 import { seoMetadata } from "@/lib/metadata";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { getCmsHome, getCmsCategories } from "@/lib/cms";
+import { getCmsPublishedProducts } from "@/lib/cms-products";
 
 export const metadata: Metadata = seoMetadata({
   title: "مجموعه شورت زنانه دارما",
@@ -12,7 +14,11 @@ export const metadata: Metadata = seoMetadata({
   indexable: false
 });
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const [copy,editorCategories,products]=await Promise.all([
+    getCmsHome(),getCmsCategories(),getCmsPublishedProducts()
+  ]);
+  const shownCollections=collections.map(c=>({...c,name:editorCategories.find(x=>x.slug===c.slug&&x.visible)?.name??c.name}));
   return (
     <>
       <SiteHeader />
@@ -20,19 +26,31 @@ export default function ShopPage() {
         <header className="inner-hero">
           <span className="editorial-label">THE COLLECTIONS</span>
           <h1>فروشگاه دارما</h1>
-          <p>مدل‌های لباس زیر زنانه دارما را در دسته‌بندی‌های مختلف ببینید. انتخاب محصول، سایز، رنگ و تعداد در بسته پس از اتصال کاتالوگ اصلی فعال خواهد شد.</p>
+          <p>{copy.shop_page_intro??"مدل‌های لباس زیر زنانه دارما را در دسته‌بندی‌های مختلف ببینید. انتخاب محصول، سایز، رنگ و تعداد در بسته پس از اتصال کاتالوگ اصلی فعال خواهد شد."}</p>
         </header>
         <div className="inner-body">
           <div className="inner-breadcrumbs"><Link href="/">خانه</Link><span>/</span><span>فروشگاه</span></div>
           <h2>مجموعه‌ها</h2>
           <div className="collection-links">
-            {collections.map((collection) => (
+            {shownCollections.map((collection) => (
               <Link href={"/shop/" + collection.slug} className="collection-link" key={collection.slug}>
                 <strong>{collection.name}</strong><small>{collection.eyebrow}</small>
               </Link>
             ))}
           </div>
-          <p className="note-panel">نسخه پیش‌نمایش: قیمت، موجودی و عکس محصولات هنوز تأیید نشده‌اند و خرید آنلاین فعال نیست. این صفحه تا آماده‌شدن اطلاعات واقعی برای ایندکس عمومی بسته می‌ماند.</p>
+          {products.length>0&&<section aria-labelledby="published-products-title">
+            <h2 id="published-products-title">محصولات تأییدشده دارما</h2>
+            <div className="darma-product-grid">
+              {products.map(p=>(
+                <Link key={p.slug} className="darma-product-tile" href={"/product/"+p.slug}>
+                  {p.image&&<img src={p.image} alt={p.title} loading="lazy" decoding="async"/>}
+                  <strong>{p.title}</strong>
+                  <span>{new Intl.NumberFormat("fa-IR").format(Math.min(...p.variants.map(v=>v.priceIrr))/10)} تومان</span>
+                </Link>
+              ))}
+            </div>
+          </section>}
+          <p className="note-panel">نسخه پیش‌نمایش: فقط مشخصات تأییدشده در این صفحه نمایش داده می‌شوند. خرید و پرداخت آنلاین هنوز فعال نیستند؛ تا آماده‌شدن فرایند فروش و سیاست‌های خرید، ایندکس عمومی بسته می‌ماند.</p>
         </div>
       </main>
       <SiteFooter />

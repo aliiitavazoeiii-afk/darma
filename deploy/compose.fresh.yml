@@ -7,6 +7,7 @@ services:
       dockerfile: deploy/Dockerfile
     env_file:
       - ../.env.preview
+      - ../.env.store
     environment:
       NEXT_PUBLIC_SITE_LIVE: "false"
     restart: unless-stopped
@@ -20,6 +21,43 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+  cms-db:
+    container_name: darmawear-cms-db
+    image: postgres:17-alpine
+    restart: unless-stopped
+    env_file:
+      - ../.env.cms
+    volumes:
+      - cms_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U darma_cms -d darma_cms"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    security_opt:
+      - no-new-privileges:true
+  cms:
+    container_name: darmawear-admin
+    image: directus/directus:12.6.1
+    env_file:
+      - ../.env.cms
+    restart: unless-stopped
+    expose:
+      - "8055"
+    depends_on:
+      cms-db:
+        condition: service_healthy
+    volumes:
+      - cms_uploads:/directus/uploads
+      - cms_extensions:/directus/extensions
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://127.0.0.1:8055/server/ping || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 45s
   caddy:
     container_name: darmawear-store-caddy
     image: caddy:2-alpine
@@ -40,3 +78,6 @@ services:
 volumes:
   caddy_data:
   caddy_config:
+  cms_db_data:
+  cms_uploads:
+  cms_extensions:
