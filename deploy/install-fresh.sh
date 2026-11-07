@@ -76,7 +76,7 @@ printf 'NEXT_PUBLIC_SITE_LIVE=false\n' > .env.preview
 chmod 600 .env.preview
 say "Validating isolated Caddy + Compose configuration."
 docker compose -p darmawear-store -f "$COMPOSE" config -q
-docker compose -p darmawear-store -f "$COMPOSE" run --rm --no-deps caddy caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+docker compose -p darmawear-store -f "$COMPOSE" run --rm --no-deps --entrypoint caddy caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
 
 say "Building Next.js with locked SEO controls."
 docker compose -p darmawear-store -f "$COMPOSE" up -d --build --no-deps web
