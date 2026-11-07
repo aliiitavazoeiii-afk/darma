@@ -97,5 +97,6 @@ jobs:
           docker exec -i darmawear-admin node --input-type=module - < cms/bootstrap.mjs
           docker exec darmawear-admin node -e "fetch('http://127.0.0.1:8055/relations',{headers:{Authorization:'Bearer '+process.env.ADMIN_TOKEN}}).then(r=>r.json()).then(j=>{const rel=j.data||[];const needed=['darma_content.hero_image','darma_content.daily_image','darma_categories.image','darma_articles.image','darma_products.image'];for(const n of needed){if(!rel.some(x=>x.collection+'.'+x.field===n && x.related_collection==='directus_files'))throw Error('Missing file relation '+n)}console.log('DARMA CMS FILE IMAGE RELATIONS VERIFIED')}).catch(e=>{console.error(e);process.exit(1)})"
           docker exec darmawear-admin node -e "fetch('http://127.0.0.1:8055/items/darma_content',{headers:{Authorization:'Bearer '+process.env.ADMIN_TOKEN}}).then(r=>r.json()).then(j=>{const v=j.data;process.exit(v && (!Array.isArray(v) || v.length>0)?0:1)}).catch(()=>process.exit(1))"
+          docker exec -i darmawear-admin node --input-type=module - < cms/smoke.mjs
           docker compose -p darmawear-ci -f deploy/compose.fresh.yml down -v
           rm -f .env.cms .env.store .env.preview
