@@ -1,0 +1,26 @@
+# Unique container/project; NO host ports, shared database or existing-container modifications.
+services:
+  web:
+    container_name: darmawear-store-web
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    env_file:
+      - ../.env.preview
+    restart: unless-stopped
+    expose:
+      - "3000"
+    networks:
+      - caddy-network
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+networks:
+  caddy-network:
+    external: true
+    name: ${CADDY_NETWORK}
