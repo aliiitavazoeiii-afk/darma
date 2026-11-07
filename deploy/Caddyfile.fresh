@@ -10,3 +10,15 @@ darmawear.ir {
     }
     reverse_proxy web:3000
 }
+
+# Private editorial and commerce data studio; separate from storefront layout.
+admin.darmawear.ir {
+    encode zstd gzip
+    header {
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        X-Frame-Options "DENY"
+        X-Robots-Tag "noindex, nofollow, noarchive"
+    }
+    reverse_proxy cms:8055
+}
