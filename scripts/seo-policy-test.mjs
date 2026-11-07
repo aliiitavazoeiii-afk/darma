@@ -83,6 +83,7 @@ need("deploy/compose.fresh.yml", /cms_uploads:/, "Persistent CMS upload volume m
 need("deploy/compose.fresh.yml", /\.env\.store/, "Private server-only CMS read token missing");
 need("deploy/Caddyfile.fresh", /admin\.darmawear\.ir/, "Separate secure admin hostname missing");
 need("deploy/Caddyfile.fresh", /noarchive/, "Private management panel must never be indexed");
+needFile("cms/smoke.mjs");
 need("cms/bootstrap.mjs", /darma_orders/, "Order management schema missing");
 need("cms/bootstrap.mjs", /darma_variants/, "Variant pricing schema missing");
 need(".dockerignore", /backups\//, "CMS database backups must be excluded from Docker builds");
