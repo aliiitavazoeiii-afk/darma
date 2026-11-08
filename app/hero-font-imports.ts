@@ -1,0 +1,21 @@
+/** Self-hosted open-license font packages. No third-party runtime CDN requests. */
+import "@fontsource-variable/vazirmatn/wght.css";
+import "@fontsource-variable/estedad/wght.css";
+import "@fontsource-variable/noto-sans-arabic/wght.css";
+import "@fontsource-variable/noto-naskh-arabic/wght.css";
+import "@fontsource-variable/cairo/wght.css";
+import "@fontsource-variable/readex-pro/wght.css";
+import "@fontsource-variable/markazi-text/wght.css";
+import "@fontsource-variable/el-messiri/wght.css";
+import "@fontsource-variable/changa/wght.css";
+import "@fontsource-variable/baloo-bhaijaan-2/wght.css";
+import "@fontsource-variable/reem-kufi/wght.css";
+import "@fontsource/lalezar/400.css";
+import "@fontsource/almarai/400.css";
+import "@fontsource/tajawal/400.css";
+import "@fontsource/amiri/400.css";
+import "@fontsource/ibm-plex-sans-arabic/400.css";
+import "@fontsource/almarai/700.css";
+import "@fontsource/tajawal/700.css";
+import "@fontsource/amiri/700.css";
+import "@fontsource/ibm-plex-sans-arabic/700.css";
