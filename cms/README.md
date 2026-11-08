@@ -122,3 +122,23 @@ https://directus.com/docs/self-hosting/overview
 
 Do not publish placeholders, invalid stock, scraped third-party prices or
 reviews, or invent available SKUs. Use true catalog data after owner approval.
+
+## Persian hero typography selector (self-hosted, no CDN)
+Go to **مدیریت صفحه اصلی** -> **فونت متن فارسی هیرو**, choose from 16
+real open-licensed families (Vazirmatn, Estedad, Noto Sans Arabic, Noto Naskh
+Arabic, Cairo, Readex Pro, Markazi Text, El Messiri, Changa, Baloo Bhaijaan 2,
+Reem Kufi, Lalezar, Almarai, Tajawal, Amiri, IBM Plex Sans Arabic).
+Save, and reload `https://darmawear.ir`. The selected font changes ONLY the
+Persian subtitle under the DARMA hero logotype; all existing layout, sizes,
+colors, logo and navigation remain code-locked. Choosing **بدون تغییر** preserves
+the existing system font. Actual font files are self-hosted via @fontsource,
+not loaded from a third-party CDN.
+
+**Kalameh**, IRANSans, Yekan Bakh and similar commercial fonts are not bundled
+or shared in this GitHub repository. To use one legally, obtain a
+**website/webfont** license for `darmawear.ir`, open the
+**فایل فونت دارای مجوز وب (WOFF2)** field in the same singleton editor,
+upload the license-authorized WOFF2 file, then choose **کلمه یا فونت خریداری‌شده**
+from the selector. The file stays on the private CMS upload volume and is served
+by a same-origin restricted endpoint only while selected. This is not a claim
+that a commercial font license has been acquired.
