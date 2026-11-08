@@ -323,3 +323,21 @@ h1,h2,h3,p{margin-top:0}
   .darma-product-tile{padding:9px}
   .darma-product-tile img{height:155px}
 }
+
+/* Editor-picked Persian hero subtitle font. Default layout/typography remains intact. */
+.hero--product[data-hero-font="vazirmatn"] .hero__copy > p {font-family:"Vazirmatn Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="estedad"] .hero__copy > p {font-family:"Estedad Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="noto-sans"] .hero__copy > p {font-family:"Noto Sans Arabic Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="noto-naskh"] .hero__copy > p {font-family:"Noto Naskh Arabic Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="cairo"] .hero__copy > p {font-family:"Cairo Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="readex"] .hero__copy > p {font-family:"Readex Pro Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="markazi"] .hero__copy > p {font-family:"Markazi Text Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="messiri"] .hero__copy > p {font-family:"El Messiri Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="changa"] .hero__copy > p {font-family:"Changa Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="baloo"] .hero__copy > p {font-family:"Baloo Bhaijaan 2 Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="reem"] .hero__copy > p {font-family:"Reem Kufi Variable",Tahoma,sans-serif;}
+.hero--product[data-hero-font="lalezar"] .hero__copy > p {font-family:"Lalezar",Tahoma,sans-serif;}
+.hero--product[data-hero-font="almarai"] .hero__copy > p {font-family:"Almarai",Tahoma,sans-serif;}
+.hero--product[data-hero-font="tajawal"] .hero__copy > p {font-family:"Tajawal",Tahoma,sans-serif;}
+.hero--product[data-hero-font="amiri"] .hero__copy > p {font-family:"Amiri",Tahoma,sans-serif;}
+.hero--product[data-hero-font="ibm"] .hero__copy > p {font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;}
