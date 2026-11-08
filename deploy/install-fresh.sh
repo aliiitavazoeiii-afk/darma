@@ -113,7 +113,7 @@ fi
 # Add website-licensed WOFF2 support on old installs without changing credentials/content.
 if grep -q '^FILES_MIME_TYPE_ALLOW_LIST=' .env.cms &&
    ! grep '^FILES_MIME_TYPE_ALLOW_LIST=' .env.cms | grep -q 'font/woff2'; then
-  sed -i '/^FILES_MIME_TYPE_ALLOW_LIST=/s/$/,font\\/woff2/' .env.cms
+  sed -i '/^FILES_MIME_TYPE_ALLOW_LIST=/s|$|,font/woff2|' .env.cms
 fi
 [[ -s .env.cms ]] || fail "CMS secret file is missing or empty"
 admintoken="$(sed -n 's/^ADMIN_TOKEN=//p' .env.cms | head -n1)"
