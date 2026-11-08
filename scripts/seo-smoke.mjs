@@ -30,6 +30,9 @@ try{
     assert(/name="robots"[^>]*content="[^"]*noindex/.test(r.html),route+" must be noindex in staging");
   }
   const home=await read("/");
+  assert(/data-hero-font="original"/.test(home.html),"Default Persian hero font must retain the current design when no selection exists");
+  const unknownFont=await read("/api/font/aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa");
+  assert(unknownFont.status===404,"Private unpublished licensed font must never become public");
   assert(/application\/ld\+json/.test(home.html)&&/"Organization"/.test(home.html)&&/"WebSite"/.test(home.html),"Brand entity JSON-LD missing");
   const robots=await read("/robots.txt");
   assert(robots.status===200&&/Disallow:\s*\//.test(robots.html),"Staging robots must disallow /");

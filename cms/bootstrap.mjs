@@ -21,7 +21,7 @@ async function api(method, path, data, optional404 = false) {
 
 
 const persianLabels={
- hero_eyebrow:"برچسب انگلیسی هیرو",hero_subtitle:"متن اصلی هیرو",hero_cta_label:"عنوان دکمه هیرو",
+ hero_eyebrow:"برچسب انگلیسی هیرو",hero_subtitle:"متن اصلی هیرو",hero_cta_label:"عنوان دکمه هیرو",hero_persian_font:"فونت متن فارسی هیرو",hero_licensed_font:"فایل فونت دارای مجوز وب (WOFF2)",
  hero_image:"تصویر هیرو دسکتاپ",hero_mobile_image:"تصویر هیرو موبایل",
  daily_eyebrow:"برچسب تخفیف امروز",daily_title:"تیتر تخفیف امروز",daily_text:"توضیح تخفیف امروز",
  daily_image:"تصویر تخفیف امروز",daily_cta_label:"دکمه تخفیف امروز",
@@ -52,6 +52,8 @@ const translation=(name)=>persianLabels[name]?
   [{language:"en-US",translation:persianLabels[name]},{language:"fa-IR",translation:persianLabels[name]}]:[];
 
 const choices={
+ hero_persian_font:[["بدون تغییر (فونت فعلی)","original"],["کلمه یا فونت خریداری‌شده (بعد از آپلود WOFF2)","licensed"],["وزیرمتن (Vazirmatn)","vazirmatn"],["استعداد (Estedad)","estedad"],["نوتو سنس عربی (Noto Sans Arabic)","noto-sans"],["نوتو نسخ (Noto Naskh Arabic)","noto-naskh"],["کایرو (Cairo)","cairo"],["ریدکس پرو (Readex Pro)","readex"],["مرکزی تکست (Markazi Text)","markazi"],["المسیری (El Messiri)","messiri"],["چانگا (Changa)","changa"],["بالو بهایجان (Baloo Bhaijaan 2)","baloo"],["ریم کوفی (Reem Kufi)","reem"],["لاله‌زار (Lalezar)","lalezar"],["المراعی (Almarai)","almarai"],["تجوال (Tajawal)","tajawal"],["امیری (Amiri)","amiri"],["آی‌بی‌ام پلکس عربی","ibm"]],
+ 
  status:[["پیش‌نویس","draft"],["منتشرشده","published"]],
  size:[["M","M"],["L","L"],["XL","XL"],["XXL","XXL"],["XXXL","XXXL"]],
  payment_status:[["در انتظار پرداخت","pending"],["پرداخت شده","paid"],["ناموفق","failed"],["بازپرداخت شده","refunded"]],
@@ -70,12 +72,13 @@ const field=(name,type,ui="input",note)=>({
 const text=(name,note)=>field(name,"text","input-multiline",note);
 const str=(name,note)=>field(name,"string","input",note);
 const file=(name,note)=>({field:name,type:"uuid",meta:{interface:"file-image",special:["file"],translations:translation(name), ...(note?{note}:{})}});
+const webfontFile=(name,note)=>({field:name,type:"uuid",meta:{interface:"file",special:["file"],translations:translation(name),...(note?{note}:{})}});
 const num=(name,note)=>field(name,"integer","input",note);
 const yes=(name,note)=>field(name,"boolean","boolean",note);
 
 const collections=[
   {name:"darma_content",label:"مدیریت صفحه اصلی",icon:"web",singleton:true,note:"Homepage wording and campaign photos. Layout and palette remain controlled by GitHub.",fields:[
-    str("hero_eyebrow"),text("hero_subtitle"),str("hero_cta_label"),
+    str("hero_eyebrow"),text("hero_subtitle"),str("hero_persian_font","فونت فقط نوشته فارسی زیر DARMA را تغییر می‌دهد؛ رنگ، قالب و اندازه ثابت می‌مانند. برای فونت کلمه، ابتدا فایل WOFF2 دارای مجوز وب را انتخاب کنید."),webfontFile("hero_licensed_font","فقط فایل WOFF2 با مجوز معتبر استفاده روی وب‌سایت darmawear.ir؛ فایل فونت در GitHub ذخیره نمی‌شود."),str("hero_cta_label"),
     file("hero_image","Main desktop homepage image"),file("hero_mobile_image","Optional separate mobile image"),
     str("daily_eyebrow"),str("daily_title"),text("daily_text"),file("daily_image"),str("daily_cta_label"),
     str("best_eyebrow"),str("best_title"),text("best_text"),file("best_image"),str("best_cta_label"),

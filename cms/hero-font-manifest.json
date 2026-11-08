@@ -1,0 +1,117 @@
+{
+  "fonts": [
+    {
+      "id": "vazirmatn",
+      "label": "وزیرمتن (Vazirmatn)",
+      "package": "@fontsource-variable/vazirmatn",
+      "family": "Vazirmatn Variable",
+      "variable": true
+    },
+    {
+      "id": "estedad",
+      "label": "استعداد (Estedad)",
+      "package": "@fontsource-variable/estedad",
+      "family": "Estedad Variable",
+      "variable": true
+    },
+    {
+      "id": "noto-sans",
+      "label": "نوتو سنس عربی (Noto Sans Arabic)",
+      "package": "@fontsource-variable/noto-sans-arabic",
+      "family": "Noto Sans Arabic Variable",
+      "variable": true
+    },
+    {
+      "id": "noto-naskh",
+      "label": "نوتو نسخ (Noto Naskh Arabic)",
+      "package": "@fontsource-variable/noto-naskh-arabic",
+      "family": "Noto Naskh Arabic Variable",
+      "variable": true
+    },
+    {
+      "id": "cairo",
+      "label": "کایرو (Cairo)",
+      "package": "@fontsource-variable/cairo",
+      "family": "Cairo Variable",
+      "variable": true
+    },
+    {
+      "id": "readex",
+      "label": "ریدکس پرو (Readex Pro)",
+      "package": "@fontsource-variable/readex-pro",
+      "family": "Readex Pro Variable",
+      "variable": true
+    },
+    {
+      "id": "markazi",
+      "label": "مرکزی تکست (Markazi Text)",
+      "package": "@fontsource-variable/markazi-text",
+      "family": "Markazi Text Variable",
+      "variable": true
+    },
+    {
+      "id": "messiri",
+      "label": "المسیری (El Messiri)",
+      "package": "@fontsource-variable/el-messiri",
+      "family": "El Messiri Variable",
+      "variable": true
+    },
+    {
+      "id": "changa",
+      "label": "چانگا (Changa)",
+      "package": "@fontsource-variable/changa",
+      "family": "Changa Variable",
+      "variable": true
+    },
+    {
+      "id": "baloo",
+      "label": "بالو بهایجان (Baloo Bhaijaan 2)",
+      "package": "@fontsource-variable/baloo-bhaijaan-2",
+      "family": "Baloo Bhaijaan 2 Variable",
+      "variable": true
+    },
+    {
+      "id": "reem",
+      "label": "ریم کوفی (Reem Kufi)",
+      "package": "@fontsource-variable/reem-kufi",
+      "family": "Reem Kufi Variable",
+      "variable": true
+    },
+    {
+      "id": "lalezar",
+      "label": "لاله‌زار (Lalezar)",
+      "package": "@fontsource/lalezar",
+      "family": "Lalezar",
+      "variable": false
+    },
+    {
+      "id": "almarai",
+      "label": "المراعی (Almarai)",
+      "package": "@fontsource/almarai",
+      "family": "Almarai",
+      "variable": false
+    },
+    {
+      "id": "tajawal",
+      "label": "تجوال (Tajawal)",
+      "package": "@fontsource/tajawal",
+      "family": "Tajawal",
+      "variable": false
+    },
+    {
+      "id": "amiri",
+      "label": "امیری (Amiri)",
+      "package": "@fontsource/amiri",
+      "family": "Amiri",
+      "variable": false
+    },
+    {
+      "id": "ibm",
+      "label": "آی‌بی‌ام پلکس عربی",
+      "package": "@fontsource/ibm-plex-sans-arabic",
+      "family": "IBM Plex Sans Arabic",
+      "variable": false
+    }
+  ],
+  "licenseNote": "Kalameh, IranSans, Yekan Bakh, Dana and similar commercial fonts are not bundled. A valid webfont license and user's licensed WOFF2 are required."
+}
