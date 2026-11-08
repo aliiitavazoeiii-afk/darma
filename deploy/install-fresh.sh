@@ -99,7 +99,7 @@ ADMIN_PASSWORD=$adminpass
 ADMIN_TOKEN=$admintoken
 PUBLIC_URL=https://admin.darmawear.ir
 FILES_MAX_UPLOAD_SIZE=25mb
-FILES_MIME_TYPE_ALLOW_LIST=image/jpeg,image/png,image/webp,image/avif,image/gif
+FILES_MIME_TYPE_ALLOW_LIST=image/jpeg,image/png,image/webp,image/avif,image/gif,font/woff2
 CORS_ENABLED=false
 WEBSOCKETS_ENABLED=false
 TELEMETRY=false
@@ -109,6 +109,11 @@ CMS_ENV
   printf 'URL=https://admin.darmawear.ir/admin\nEMAIL=admin@darmawear.ir\nPASSWORD=%s\n' "$adminpass" > /root/darmawear-admin-first-login.txt
   chmod 600 /root/darmawear-admin-first-login.txt
   unset dbpass adminpass admintoken signsecret
+fi
+# Add website-licensed WOFF2 support on old installs without changing credentials/content.
+if grep -q '^FILES_MIME_TYPE_ALLOW_LIST=' .env.cms &&
+   ! grep '^FILES_MIME_TYPE_ALLOW_LIST=' .env.cms | grep -q 'font/woff2'; then
+  sed -i '/^FILES_MIME_TYPE_ALLOW_LIST=/s/$/,font\\/woff2/' .env.cms
 fi
 [[ -s .env.cms ]] || fail "CMS secret file is missing or empty"
 admintoken="$(sed -n 's/^ADMIN_TOKEN=//p' .env.cms | head -n1)"
