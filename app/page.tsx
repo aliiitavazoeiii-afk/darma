@@ -32,7 +32,9 @@ export default async function Home() {
   return (
     <>
       <main>
-        <section className="hero hero--product" aria-labelledby="hero-title" data-hero-font={validatedHeroFont(copy.hero_persian_font)}>
+        <section className="hero hero--product" aria-labelledby="hero-title" data-hero-font={validatedHeroFont(copy.hero_persian_font,copy.hero_licensed_font)}>
+          {validatedHeroFont(copy.hero_persian_font,copy.hero_licensed_font)==="licensed"&&copy.hero_licensed_font&&
+            <style>{`@font-face{font-family:"Darma Licensed Webfont";src:url("/api/font/${copy.hero_licensed_font}") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}`}</style>}
           <SiteHeader overlay />
           <div className="hero__scene" aria-hidden="true">
             <picture className="hero__art">
