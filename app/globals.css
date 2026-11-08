@@ -341,3 +341,6 @@ h1,h2,h3,p{margin-top:0}
 .hero--product[data-hero-font="tajawal"] .hero__copy > p {font-family:"Tajawal",Tahoma,sans-serif;}
 .hero--product[data-hero-font="amiri"] .hero__copy > p {font-family:"Amiri",Tahoma,sans-serif;}
 .hero--product[data-hero-font="ibm"] .hero__copy > p {font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;}
+
+/* A commercial font is enabled only with a site-licensed uploaded WOFF2 file. */
+.hero--product[data-hero-font="licensed"] .hero__copy > p {font-family:"Darma Licensed Webfont",Tahoma,sans-serif;}
