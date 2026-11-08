@@ -5,7 +5,7 @@ import { Icon } from "@/components/icons";
 import { collections } from "@/lib/catalog";
 import { JsonLd } from "@/lib/metadata";
 import { SITE_URL } from "@/lib/site";
-import { getCmsHome, getCmsCategories, getCmsArticles, publicCmsImage } from "@/lib/cms";
+import { getCmsHome, getCmsCategories, getCmsArticles, publicCmsImage, validatedHeroFont } from "@/lib/cms";
 
 const editorialTopics = [
   { title: "راهنمای انتخاب سایز", detail: "چطور اندازه مناسب خود را پیدا کنیم؟", theme: "size" },
@@ -32,7 +32,7 @@ export default async function Home() {
   return (
     <>
       <main>
-        <section className="hero hero--product" aria-labelledby="hero-title">
+        <section className="hero hero--product" aria-labelledby="hero-title" data-hero-font={validatedHeroFont(copy.hero_persian_font)}>
           <SiteHeader overlay />
           <div className="hero__scene" aria-hidden="true">
             <picture className="hero__art">
