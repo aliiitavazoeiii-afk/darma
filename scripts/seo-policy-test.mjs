@@ -70,6 +70,10 @@ need("deploy/Caddyfile.fresh", /X-Robots-Tag.*noindex/, "Staging must be noindex
 need("deploy/install-fresh.sh", /NEXT_PUBLIC_SITE_LIVE=false/, "Fresh-VPS deploy must not index incomplete catalog.");
 // Preserve future production launch guard and approved product image checksum contract.
 need("deploy/install-fresh.sh", /HERO_SHA=/, "Verified approved hero asset required.");
+need("deploy/install-fresh.sh", /missing_system_tools/, "Subsequent server installs must not re-run apt by default");
+need("deploy/install-fresh.sh", /skipping apt to avoid unattended-upgrades lock/, "Existing VPS must bypass package manager locks");
+need("deploy/install-fresh.sh", /DPkg::Lock::Timeout=300/, "Fresh installs must wait safely for OS package manager lock");
+
 
 
 // Headless Studio may only supply content. Protected design markup and SEO remain in Next.js.
