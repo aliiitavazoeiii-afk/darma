@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "@/app/globals.css";
+import "@/app/hero-font-imports";
 import { SITE_LIVE, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
