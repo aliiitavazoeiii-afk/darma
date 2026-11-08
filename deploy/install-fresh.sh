@@ -22,8 +22,24 @@ if command -v flock >/dev/null; then exec 9>/run/darmawear-fresh-install.lock; f
 [[ ! -e /opt/darma-general ]] || fail "Existing ERP directory found: this installer is only for a new VPS."
 [[ ! -e "$APP" || -d "$APP/.git" ]] || fail "Unrecognized existing $APP; not overwriting."
 say "Checking ports 80 and 443, preparing the system."
-apt-get update -y
-apt-get install -y ca-certificates curl git iproute2 openssl
+# On an already-provisioned host, do not touch apt/dpkg: Ubuntu unattended-upgrades
+# may legitimately own dpkg's frontend lock. Existing upgrades must never be killed.
+# This also keeps routine storefront/CMS content updates independent of apt mirrors.
+missing_system_tools=0
+for tool in curl git ss openssl; do
+  if ! command -v "$tool" >/dev/null 2>&1; then
+    missing_system_tools=1
+    say "Required OS utility not yet installed: $tool"
+  fi
+done
+if [[ ! -s /etc/ssl/certs/ca-certificates.crt ]]; then missing_system_tools=1; fi
+if [[ "$missing_system_tools" = "1" ]]; then
+  say "Installing missing OS utilities; apt will wait for running Ubuntu upgrades."
+  apt-get -o DPkg::Lock::Timeout=300 update -y
+  apt-get -o DPkg::Lock::Timeout=300 install -y ca-certificates curl git iproute2 openssl
+else
+  say "OS dependencies already installed; skipping apt to avoid unattended-upgrades lock."
+fi
 if ! command -v docker >/dev/null 2>&1; then
   occupied="$(ss -lntH | awk '{print $4}' | grep -E ':(80|443)$' || true)"
   [[ -z "$occupied" ]] || fail "Web ports already in use: $occupied"
@@ -40,8 +56,8 @@ Components: stable
 Architectures: $architecture
 Signed-By: /etc/apt/keyrings/docker.asc
 DOCKER_REPO
-  apt-get update -y
-  apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  apt-get -o DPkg::Lock::Timeout=300 update -y
+  apt-get -o DPkg::Lock::Timeout=300 install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   systemctl enable --now docker
 else
   docker compose version >/dev/null 2>&1 || fail "Existing Docker lacks Compose; refusing to replace an unknown installation."
