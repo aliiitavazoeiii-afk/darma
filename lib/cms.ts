@@ -20,7 +20,10 @@ async function api(path:string):Promise<unknown> {
 }
 export const privateCmsRead=api;
 const heroFontIds=new Set(heroFontManifest.fonts.map(font=>font.id));
-export function validatedHeroFont(value?:string):string {return value && heroFontIds.has(value)?value:"original";}
+export function validatedHeroFont(value?:string, licensedId?:string):string {
+  if(value==="licensed")return isImageId(licensedId)?"licensed":"original";
+  return value && heroFontIds.has(value)?value:"original";
+}
 const obj=(value:unknown):Record<string,unknown>|null=>
   value && typeof value==="object" && !Array.isArray(value)?value as Record<string,unknown>:null;
 const list=(value:unknown):Record<string,unknown>[] =>
@@ -30,7 +33,7 @@ const str=(value:unknown,max=300):string|undefined=>
 const val=(entry:Record<string,unknown>,name:string)=>str(entry[name],name.includes("text")||name.includes("subtitle")?700:200);
 
 export type CmsHome={
-  hero_eyebrow?:string;hero_subtitle?:string;hero_cta_label?:string;hero_persian_font?:string;
+  hero_eyebrow?:string;hero_subtitle?:string;hero_cta_label?:string;hero_persian_font?:string;hero_licensed_font?:string;
   hero_image?:string;hero_mobile_image?:string;
   daily_eyebrow?:string;daily_title?:string;daily_text?:string;daily_image?:string;daily_cta_label?:string;
   best_eyebrow?:string;best_title?:string;best_text?:string;best_image?:string;best_cta_label?:string;
@@ -43,7 +46,7 @@ export type CmsCategory={slug:string;name?:string;eyebrow?:string;description?:s
 export type CmsArticle={slug:string;title:string;summary?:string;image?:string};
 
 const contentFields=[
- "hero_eyebrow","hero_subtitle","hero_cta_label","hero_persian_font","hero_image","hero_mobile_image",
+ "hero_eyebrow","hero_subtitle","hero_cta_label","hero_persian_font","hero_licensed_font","hero_image","hero_mobile_image",
  "daily_eyebrow","daily_title","daily_text","daily_image","daily_cta_label",
  "best_eyebrow","best_title","best_text","best_image","best_cta_label",
  "collections_title","collections_text","magazine_title","magazine_text",
@@ -61,7 +64,7 @@ export async function getCmsHome():Promise<CmsHome> {
     const value=val(record,field);
     if(value) out[field]=value;
   }
-  for(const key of ["hero_image","hero_mobile_image","daily_image","best_image"]){
+  for(const key of ["hero_image","hero_mobile_image","daily_image","best_image","hero_licensed_font"]){
     if(!isImageId(out[key]))delete out[key];
   }
   return out as CmsHome;
@@ -118,4 +121,20 @@ export async function getCmsAsset(id:string):Promise<Response|null>{
     if(!r.ok || !(r.headers.get("content-type")||"").startsWith("image/"))return null;
     return r;
   }catch{return null;}
+}
+
+export async function getLicensedHeroFontAsset(id:string):Promise<Response|null>{
+  if(!endpoint||!token||!isImageId(id))return null;
+  const home=await getCmsHome();
+  if(home.hero_persian_font!=="licensed"||home.hero_licensed_font!==id)return null;
+  try {
+    const response=await fetch(endpoint+"/assets/"+encodeURIComponent(id),{
+      cache:"no-store",headers:{Authorization:"Bearer "+token},
+      signal:AbortSignal.timeout(12000)
+    });
+    if(!response.ok)return null;
+    const mime=(response.headers.get("content-type")||"").split(";")[0];
+    if(!["font/woff2","application/font-woff","application/octet-stream"].includes(mime))return null;
+    return response;
+  } catch {return null;}
 }
