@@ -88,4 +88,28 @@ need("cms/bootstrap.mjs", /darma_orders/, "Order management schema missing");
 need("cms/bootstrap.mjs", /darma_variants/, "Variant pricing schema missing");
 need(".dockerignore", /backups\//, "CMS database backups must be excluded from Docker builds");
 
+
+const fontManifest=JSON.parse(read("cms/hero-font-manifest.json"));
+if(!Array.isArray(fontManifest.fonts)||fontManifest.fonts.length<12)bad("Too few real, licensed Persian font choices");
+const fontCSS=read("app/hero-font-imports.ts");
+const fontStyles=read("app/globals.css");
+const packageJson=JSON.parse(read("package.json"));
+const studio=read("cms/bootstrap.mjs");
+const fontIds=new Set();
+for(const font of fontManifest.fonts){
+  if(!/^[a-z0-9-]{2,40}$/.test(font.id) || fontIds.has(font.id))bad("Invalid/duplicate Persian font ID");
+  fontIds.add(font.id);
+  if(!font.package.startsWith("@fontsource"))bad("Only vetted self-hosted font packages allowed");
+  if(!packageJson.dependencies[font.package])bad("Persian font missing from dependencies: "+font.id);
+  if(!fontCSS.includes(font.package+"/"))bad("Actual webfont CSS was not imported: "+font.id);
+  if(!fontStyles.includes('data-hero-font="'+font.id+'"'))bad("Font is not wired into public hero: "+font.id);
+  if(!studio.includes('["'+font.label+'","'+font.id+'"]'))bad("Font missing from Persian Studio dropdown: "+font.id);
+}
+need("app/page.tsx", /validatedHeroFont/, "Hero font must be validated server side");
+need("lib/cms.ts", /heroFontIds.has/, "Unknown font selection must be rejected");
+need("deploy/install-fresh.sh", /font\/woff2/, "Licensed WOFF2 upload support missing");
+need("app/api/font/[id]/route.ts", /getLicensedHeroFontAsset/, "Licensed fonts must be private and owner-selected");
+need("app/api/font/[id]/route.ts", /bytes\[0\]!==119/, "Untrusted uploads must be checked for WOFF2 signature");
+need("app/page.tsx", /Darma Licensed Webfont/, "Licensed font must have a real scoped font-face");
+
 console.log("DARMA STRICT SEO SOURCE CHECK: PASS");
