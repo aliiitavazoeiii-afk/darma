@@ -63,7 +63,7 @@ jobs:
       - name: Server-rendered SEO regression check
         run: npm run seo:smoke
       - name: Chromium install for real desktop/tablet/mobile quality gate
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium  # ubuntu-24.04 runners already include browser runtime libraries
       - name: Mocha Elegance browser-responsive regression with screenshot artifacts
         run: npm run theme:responsive
       - name: Upload Mocha Elegance visual review screenshots
