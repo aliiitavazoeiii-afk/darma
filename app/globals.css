@@ -387,3 +387,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{border-color:var
   .collection-link{min-height:175px}
   .site-footer{padding-top:38px}
 }
+
+/* Sage is reserved for truthful positive inventory, not purchase or primary CTA. */
+.inventory-note{color:var(--text-secondary);font-size:12px}
+.inventory-note--available{color:var(--brand-sage-ink);font-weight:700}
+.collections__intro .editorial-label{border-bottom:2px solid var(--brand-sage);padding-bottom:5px}
