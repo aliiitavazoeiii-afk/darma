@@ -62,10 +62,10 @@ try{
       assert.ok(measure.documentWidth<=measure.viewportWidth+2,
         viewport.name+" "+route+" horizontal body overflow "+
         measure.documentWidth+">"+measure.viewportWidth);
-      assert.equal(measure.palette.espresso,"#49362F");
-      assert.equal(measure.palette.mocha,"#C7AD96");
-      assert.equal(measure.palette.sage,"#788779");
-      assert.equal(measure.palette.cream,"#F8F5F0");
+      assert.equal(measure.palette.espresso.toLowerCase(),"#49362f");
+      assert.equal(measure.palette.mocha.toLowerCase(),"#c7ad96");
+      assert.equal(measure.palette.sage.toLowerCase(),"#788779");
+      assert.equal(measure.palette.cream.toLowerCase(),"#f8f5f0");
       assert.equal(measure.footerBg,"rgb(73,54,47)",viewport.name+" "+route+" footer must be espresso");
       if(route==="/"){
         const hero=page.locator(".hero--product .hero__art img");
