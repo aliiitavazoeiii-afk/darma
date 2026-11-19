@@ -1,0 +1,56 @@
+/* DARMA / Mocha Elegance — single authoritative runtime palette.
+   Change the semantic design tokens here; no CMS record or imagery is modified.
+   Visual specification: 50% light neutrals, 25% espresso, 20% mocha, <=5% sage accent. */
+:root{
+  color-scheme:light;
+  --brand-espresso:#49362F;
+  --brand-mocha:#C7AD96;
+  --brand-sage:#788779;
+  --brand-cream:#F8F5F0;
+  --brand-white:#FFFCF8;
+  --brand-muted:#766D66;
+
+  /* Accessible derived shades; sage itself is decorative, not small text. */
+  --brand-espresso-hover:#34251F;
+  --brand-mocha-deep:#9B806B;
+  --brand-mocha-pale:#F1E9E0;
+  --brand-mocha-surface:#E8D9CB;
+  --brand-sage-ink:#415343;
+  --brand-sage-pale:#E8EEE6;
+
+  /* Semantic roles; used across campaigns, commerce, informational pages. */
+  --surface-page:var(--brand-cream);
+  --surface-elevated:var(--brand-white);
+  --surface-inset:var(--brand-mocha-pale);
+  --surface-campaign:var(--brand-mocha);
+  --surface-emphasis:var(--brand-espresso);
+  --text-primary:var(--brand-espresso);
+  --text-secondary:var(--brand-muted);
+  --text-inverse:var(--brand-white);
+  --text-on-mocha:var(--brand-espresso);
+  --border-subtle:#D9CDC2;
+  --border-strong:var(--brand-espresso);
+  --focus-ring:var(--brand-sage-ink);
+  --focus-ring-inverse:var(--brand-mocha);
+  --button-primary-bg:var(--brand-espresso);
+  --button-primary-text:var(--brand-white);
+  --button-primary-hover:var(--brand-espresso-hover);
+  --button-secondary-bg:transparent;
+  --button-secondary-text:var(--brand-espresso);
+  --button-disabled-bg:#E5DED6;
+  --button-disabled-text:#706861;
+  --status-positive-bg:var(--brand-sage-pale);
+  --status-positive-text:var(--brand-sage-ink);
+
+  /* Backwards-compatible mappings for existing components. Never use old pinks. */
+  --espresso:var(--brand-espresso);
+  --espresso-2:var(--brand-espresso-hover);
+  --cocoa:var(--brand-espresso);
+  --mauve:var(--brand-mocha);
+  --dusty:var(--brand-mocha-deep);
+  --blush:var(--brand-mocha);
+  --ivory:var(--brand-cream);
+  --milk:var(--brand-white);
+  --ink:var(--text-primary);
+  --line:var(--border-subtle);
+}
