@@ -116,4 +116,10 @@ need("app/api/font/[id]/route.ts", /getLicensedHeroFontAsset/, "Licensed fonts m
 need("app/api/font/[id]/route.ts", /bytes\[0\]!==119/, "Untrusted uploads must be checked for WOFF2 signature");
 need("app/page.tsx", /Darma Licensed Webfont/, "Licensed font must have a real scoped font-face");
 
+
+needFile("app/theme-tokens.css");
+needFile("scripts/theme-audit.mjs");
+needFile("scripts/theme-responsive-smoke.mjs");
+need("app/layout.tsx", /theme-tokens\.css/, "Every route must load the central brand palette");
+need("app/globals.css", /var\(--brand-espresso\)/, "Components must use semantic Mocha design tokens");
 console.log("DARMA STRICT SEO SOURCE CHECK: PASS");
