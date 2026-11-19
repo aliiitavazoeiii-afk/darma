@@ -73,7 +73,26 @@ fi
 if [[ -d "$APP/.git" ]]; then
   remote="$(git -C "$APP" remote get-url origin)"
   [[ "$remote" = "$REPO" ]] || fail "Unknown git remote $remote; not overwriting."
-  [[ -z "$(git -C "$APP" status --porcelain --untracked-files=no)" ]] || fail "Local tracked edits detected; not overwriting."
+  # Production's Caddyfile may have an intentional local change made when enabling
+  # admin.darmawear.ir. Keep it intact; never reset --hard or discard custom rules.
+  # Permit ONLY that one changed tracked file and verify required routes/noindex.
+  local_tracked_edits="$(git -C "$APP" diff HEAD --name-only --)"
+  if [[ -n "$local_tracked_edits" ]]; then
+    [[ "$local_tracked_edits" = "deploy/Caddyfile.fresh" ]] ||
+      fail "Unexpected tracked changes (only Caddyfile local overrides are supported): $local_tracked_edits"
+    local_caddy="$APP/deploy/Caddyfile.fresh"
+    for route in "darmawear.ir {" "admin.darmawear.ir {" "reverse_proxy web:3000" "reverse_proxy cms:8055" \
+      'noindex, nofollow' 'noindex, nofollow, noarchive'; do
+      grep -Fq "$route" "$local_caddy" ||
+        fail "Existing local Caddyfile lacks required preview/admin configuration: $route"
+    done
+    # A root-only backup of exact local bytes before any subsequent git operation.
+    install -m 0700 -d /root/darmawear-config-backups
+    caddy_backup="/root/darmawear-config-backups/Caddyfile.fresh.$(date -u +%Y%m%d-%H%M%S).bak"
+    cp -- "$local_caddy" "$caddy_backup"
+    chmod 0600 "$caddy_backup"
+    say "Preserving validated local Caddyfile override (backup: $caddy_backup)."
+  fi
   say "Updating protected main (fast forward only)."
   git -C "$APP" fetch origin main
   git -C "$APP" checkout main
