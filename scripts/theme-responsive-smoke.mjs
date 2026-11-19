@@ -84,7 +84,7 @@ try{
           const cssColor=(selector,pseudo)=>{
             const node=document.querySelector(selector);
             if(!node)throw Error("Missing sage component "+selector);
-            return getComputedStyle(node,pseudo||null).backgroundColor.replace(/\\s+/g,"");
+            return getComputedStyle(node,pseudo||null).backgroundColor.replace(/\s+/g,"");
           };
           return {
             hero:cssColor(".hero--product .hero__copy .editorial-label","::before"),
@@ -107,8 +107,8 @@ try{
       }
       if(route==="/shop"){
         const sageShop=await page.evaluate(()=>({
-          inner:getComputedStyle(document.querySelector(".inner-hero .editorial-label"),"::before").backgroundColor.replace(/\\s+/g,""),
-          category:getComputedStyle(document.querySelector(".collection-link:nth-child(2)"),"::before").backgroundColor.replace(/\\s+/g,"")
+          inner:getComputedStyle(document.querySelector(".inner-hero .editorial-label"),"::before").backgroundColor.replace(/\s+/g,""),
+          category:getComputedStyle(document.querySelector(".collection-link:nth-child(2)"),"::before").backgroundColor.replace(/\s+/g,"")
         }));
         assert.equal(sageShop.inner,"rgb(120,135,121)","Inner pages need visible sage accent");
         assert.equal(sageShop.category,"rgb(120,135,121)","Shop category bookmark must be sage");
