@@ -62,6 +62,18 @@ jobs:
         run: npm run build
       - name: Server-rendered SEO regression check
         run: npm run seo:smoke
+      - name: Chromium install for real desktop/tablet/mobile quality gate
+        run: npx playwright install --with-deps chromium
+      - name: Mocha Elegance browser-responsive regression with screenshot artifacts
+        run: npm run theme:responsive
+      - name: Upload Mocha Elegance visual review screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: darma-mocha-elegance-visual-review
+          path: test-artifacts/mocha-elegance/*.png
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Docker build parity with actual VPS deployment
         run: docker build --progress=plain --file deploy/Dockerfile --tag darmawear-ci:${{ github.sha }} .
 
