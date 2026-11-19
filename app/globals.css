@@ -392,3 +392,86 @@ input:focus-visible,select:focus-visible,textarea:focus-visible{border-color:var
 .inventory-note{color:var(--text-secondary);font-size:12px}
 .inventory-note--available{color:var(--brand-sage-ink);font-weight:700}
 .collections__intro .editorial-label{border-bottom:2px solid var(--brand-sage);padding-bottom:5px}
+
+/* Mocha Elegance / Sage accents v2: intentionally visible, always restrained.
+   Sage is an accent (not CTA), spread through the existing editorial layout. */
+
+/* Hero: signature green beside the editorial brand eyebrow; real image untouched. */
+.hero--product .hero__copy .editorial-label::before{
+  content:"";display:inline-block;width:11px;height:11px;border-radius:2px;
+  margin-inline-end:12px;vertical-align:-1px;background:var(--brand-sage);
+}
+
+/* Benefits: one distinct sage medallion, the other benefits remain mocha. */
+.benefits__grid>div:nth-child(2) svg{
+  color:var(--brand-white);background:var(--brand-sage);
+  width:42px;height:42px;min-width:42px;padding:9px;border-radius:50%;
+}
+
+/* Daily campaign: soft sage badge and a line in the eyebrow, never a sale claim. */
+.daily__message .editorial-label::before{
+  content:"";display:inline-block;width:30px;height:4px;
+  margin-inline-end:10px;vertical-align:3px;background:var(--brand-sage);
+}
+.daily__pending{
+  background:var(--brand-sage-pale);border-color:var(--brand-sage);
+  color:var(--brand-sage-ink);align-items:center;gap:9px;
+}
+.daily__pending::before{
+  content:"";width:9px;height:9px;flex:0 0 9px;border-radius:50%;
+  background:var(--brand-sage);
+}
+
+/* Curated pack spotlight: small sage rule against the espresso surface. */
+.bestseller__sidebar .editorial-label::after{
+  content:"";display:block;width:45px;height:4px;
+  margin:10px auto 0;background:var(--brand-sage);
+}
+
+/* Category photo: one sage arrow medallion, no recoloring of CMS photos. */
+.collection-slat--2 .collection-slat__label svg{
+  flex:none;color:var(--brand-white);background:var(--brand-sage);
+  width:29px;height:29px;padding:7px;border-radius:50%;
+}
+
+/* Magazine & internal pages: editorial punctuation, no green body text. */
+.magazine__intro .editorial-label::before{
+  content:"";display:inline-block;width:10px;height:10px;
+  margin-inline-end:12px;vertical-align:0;background:var(--brand-sage);
+  border-radius:50%;
+}
+.inner-hero .editorial-label::before{
+  content:"";display:inline-block;width:34px;height:4px;
+  margin-inline-end:11px;vertical-align:3px;background:var(--brand-sage);
+}
+
+/* Shop's category navigation: a sage bookmark on one tile. */
+.collection-link:nth-child(2)::before{
+  content:"";position:absolute;top:18px;right:20px;
+  width:46px;height:5px;background:var(--brand-sage);
+  border-radius:1px;
+}
+
+/* Existing live SKU selection should display the same accessible accent. */
+.product-variants .note-panel[aria-current="true"]{
+  border-right-color:var(--brand-sage);
+  background:var(--brand-sage-pale);
+}
+.product-variants .note-panel[aria-current="true"] strong{
+  color:var(--brand-sage-ink);
+}
+
+/* Footer: short recognizable sage stroke alongside the shop's brand story. */
+.site-footer__about h2::before{
+  content:"";display:inline-block;width:4px;height:18px;
+  margin-inline-end:11px;vertical-align:-3px;background:var(--brand-sage);
+}
+
+@media (max-width:650px){
+  .benefits__grid>div:nth-child(2) svg{
+    width:34px;height:34px;min-width:34px;padding:7px;
+  }
+  .collection-slat--2 .collection-slat__label svg{
+    width:26px;height:26px;padding:6px;
+  }
+}
