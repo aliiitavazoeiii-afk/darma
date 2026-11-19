@@ -1,15 +1,15 @@
 # DARMA — approved home visual blueprint
 
 ## Source of truth and scope
-The owner explicitly approved the last screenshot on 2026-11-05: "in awliye pallete rangesh hamechish okeye ... be hichish dast nazan".
-This document preserves the screenshot's layout logic. If a textual instruction conflicts with what the screenshot looks like, the approved screenshot wins. The binary screenshot is in the ChatGPT conversation at a_cinematic_high_end_fashion_e_commerce_homepage.png (1024x1536) and should be copied into the repo separately.
+The original editorial layout was approved on 2026-11-05. On 2026-11-19 the owner explicitly superseded **only the visual color identity** with **Mocha Elegance**. Preserve layout, real photos, CMS content, product prices, URLs and technical/SEO architecture.
+This document preserves the screenshot's layout logic. The composition of the previously approved design remains authoritative, but the owner’s later Mocha Elegance palette overrides its former rose/mauve palette. The binary screenshot is in the ChatGPT conversation at a_cinematic_high_end_fashion_e_commerce_homepage.png (1024x1536) and should be copied into the repo separately.
 
 No framework/theme should dictate the layout. Build unique components. Directus is a separate content backend, not a theme editor.
 
 ## Visual identity
-- Atmosphere: cinematic, editorial, intimate, premium, warm, serene, not commercial-mass-market.
-- Light: late-afternoon directional sunlight through window slats; realistic organic shadows, smooth warm contrast, no neon/glossy UI.
-- Palette: near-black espresso, charcoal-brown, cocoa, dusty mauve, silk blush, muted rose, ivory; see tokens.json. These are sampled guidance, not a promise of exact CSS-to-photography correspondence.
+- Atmosphere: boutique, minimalist, editorial, intimate, premium, warm and serene — not a mass-market WordPress storefront.
+- Light: natural warm contrast. The photography stays original; no replacement image or recoloring of owner-supplied product photography. Avoid flashy gradients and heavy shadows.
+- Palette (current): espresso **#49362F** and mocha beige **#C7AD96** dominate; warm cream **#F8F5F0** and warm white **#FFFCF8** keep the layout light. Sage **#788779** is a ≤5% accent, with **#415343** for accessible small green text. Secondary text **#766D66**. The code source of truth is `app/theme-tokens.css` mirrored in `design/tokens.json`.
 - Photography: tactile fabrics, sculptural draping, rich shadow gradations, real texture; reserve generous negative space for typography.
 - Typography: DARMA logotype in high-contrast thin serif with extreme uppercase tracking. Small English editorial labels: widely tracked uppercase. Persian: elegant readable modern sans with confident display weight; do not use decorative calligraphy for interface copy.
 - UI: hairline separators, very restrained outline CTA, minimum decorations. Subtle radii only where reference displays them. No generic boxed cards.
@@ -76,3 +76,19 @@ Until source image is committed, pixel-perfect matching cannot be independently 
 - The page's ordered sections and branded editorial appearance are locked even if the CMS database is reset or offline; safe defaults stay in code.
 - Pricing/order collections are prepared for commerce integration but do not imply a connected payment gateway or live customer orders.
 - Never give editor-supplied HTML/script/style strings direct rendering or publish invented discounts, stock counts, ratings or prices.
+
+## 2026-11-19 — Mocha Elegance implementation boundary
+The owner explicitly requests a full **visual color redesign** of the current DARMA repository, not a new theme or changed commerce functionality.
+The authoritative palette and semantic CSS tokens are located in `app/theme-tokens.css`;
+`design/tokens.json` mirrors the brand base swatches. Rough visual guidance:
+50% light neutrals, 25% espresso, 20% mocha and 5% sage.
+- Important: all existing URLs, DOM section order, customer-facing copy, image files,
+  CMS-uploaded photos, products, SKUs and verified prices remain unchanged.
+- Primary actions are espresso with warm-white text; alternate actions are espresso outlines.
+- Sage #788779 is **not** sufficient for ordinary small text on warm white: use
+  accessible dark sage #415343 when green conveys stock/positive state.
+- Existing hero photo and editor-selectable Persian hero font are unchanged.
+- No new cart/checkout/payment flow is invented: these parts are not currently live.
+- Use semantic hover/active/focus/disabled tokens; never fall back to rose/magenta
+  fills or loud green primary CTAs.
+- Build, SSR SEO, CMS integration, true browser viewport and AA token audits gate release.

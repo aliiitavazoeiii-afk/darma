@@ -56,7 +56,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
               <Link key={variant.sku} href={pageUrl + "?sku=" + encodeURIComponent(variant.sku)} className="note-panel" aria-current={current?.sku === variant.sku ? "true" : undefined}>
                 <span>سایز {variant.size} · {variant.color} · بسته {variant.packCount} عددی</span>
                 <strong>{variant.priceIrr === null ? "قیمت در انتظار تأیید" : new Intl.NumberFormat("fa-IR").format(variant.priceIrr / 10) + " تومان"}</strong>
-                <span>{variant.inStock ? "موجود" : "ناموجود"}</span>
+                <span className={variant.inStock ? "inventory-note inventory-note--available" : "inventory-note"}>{variant.inStock ? "موجود" : "ناموجود"}</span>
               </Link>
             ))}
           </div>

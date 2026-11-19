@@ -7,9 +7,11 @@
     "build": "node scripts/release-guard.mjs && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "seo:static": "node scripts/check-seo-governance.mjs && node scripts/seo-policy-test.mjs",
+    "seo:static": "node scripts/check-seo-governance.mjs && node scripts/seo-policy-test.mjs && node scripts/theme-audit.mjs",
     "seo:smoke": "node scripts/seo-smoke.mjs",
-    "release:check": "node scripts/release-guard.mjs"
+    "release:check": "node scripts/release-guard.mjs",
+    "theme:audit": "node scripts/theme-audit.mjs",
+    "theme:responsive": "node scripts/theme-responsive-smoke.mjs"
   },
   "dependencies": {
     "next": "16.4.5",
@@ -36,7 +38,8 @@
     "@types/node": "24.9.2",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "playwright": "1.56.1"
   },
   "engines": {
     "node": ">=20.9.0"
