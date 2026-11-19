@@ -70,7 +70,7 @@ try{
       if(route==="/"){
         const hero=page.locator(".hero--product .hero__art img");
         assert.equal(await hero.count(),1,"Approved real hero image must still render");
-        const img=await hero.evaluate(node=>({src:node.getAttribute("src"),valid:node.complete&&node.naturalWidth>0}));
+        const img=await hero.evaluate(async node=>{await node.decode().catch(()=>{});return {src:node.getAttribute("src"),valid:node.complete&&node.naturalWidth>0}});
         assert.equal(img.src,"/media/hero-desktop.webp","Owner photo URL may not be changed");
         assert.ok(img.valid,"Hero photo must decode in "+viewport.name);
         const campaign=page.locator(".daily__message .button--rose");
