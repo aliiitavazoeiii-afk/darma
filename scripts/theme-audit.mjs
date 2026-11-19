@@ -77,4 +77,23 @@ assert.ok(!/#[0-9a-fA-F]{6}\b/.test(globals),"All literal brand colors must use 
 const hero=fs.readFileSync("app/page.tsx","utf8");
 assert.ok(hero.includes('src={heroDesktop}')&&hero.includes('srcSet={heroMobile}'),"Do not swap real approved hero imagery");
 assert.ok(hero.includes("validatedHeroFont"),"Owner's selected CMS hero font must continue working");
+
+const sageLocations=[
+ ".hero--product .hero__copy .editorial-label::before",
+ ".benefits__grid>div:nth-child(2) svg",
+ ".daily__message .editorial-label::before",
+ ".daily__pending::before",
+ ".bestseller__sidebar .editorial-label::after",
+ ".collection-slat--2 .collection-slat__label svg",
+ ".magazine__intro .editorial-label::before",
+ ".inner-hero .editorial-label::before",
+ ".collection-link:nth-child(2)::before",
+ ".product-variants .note-panel[aria-current=\"true\"]",
+ ".site-footer__about h2::before"
+];
+for(const selector of sageLocations)assert.ok(globals.includes(selector),
+  "Sage accent needs a concrete visible placement: "+selector);
+assert.ok(globals.includes("background:var(--brand-sage-pale)"),"Sage needs light editorial surfaces");
+assert.match(globals,/\.daily__pending\{[^}]*color:var\(--brand-sage-ink\)/,
+  "Accessible badge text must use dark sage, not low-contrast raw sage");
 console.log("DARMA MOCHA ELEGANCE THEME / WCAG AA / RESPONSIVE CONTRACT: PASS");
