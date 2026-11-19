@@ -8,7 +8,7 @@ permissions:
 jobs:
   seo-governance:
     name: seo-governance
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # Playwright 1.56 Chromium + Docker validation; pin to supported LTS
     timeout-minutes: 30
     env:
       NEXT_PUBLIC_SITE_LIVE: "false"
