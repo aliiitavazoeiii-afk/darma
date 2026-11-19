@@ -80,6 +80,38 @@ try{
         }));
         assert.equal(buttonStyle.bg,"rgb(73, 54, 47)","Primary CTA must be espresso");
         assert.equal(buttonStyle.color,"rgb(255, 252, 248)","Primary CTA must use warm white text");
+        const sageAudit=await page.evaluate(()=>{
+          const cssColor=(selector,pseudo)=>{
+            const node=document.querySelector(selector);
+            if(!node)throw Error("Missing sage component "+selector);
+            return getComputedStyle(node,pseudo||null).backgroundColor.replace(/\\s+/g,"");
+          };
+          return {
+            hero:cssColor(".hero--product .hero__copy .editorial-label","::before"),
+            benefit:cssColor(".benefits__grid>div:nth-child(2) svg"),
+            dailyEyebrow:cssColor(".daily__message .editorial-label","::before"),
+            dailyBadge:cssColor(".daily__pending"),
+            dailyBadgeDot:cssColor(".daily__pending","::before"),
+            best:cssColor(".bestseller__sidebar .editorial-label","::after"),
+            collectionArrow:cssColor(".collection-slat--2 .collection-slat__label svg"),
+            magazine:cssColor(".magazine__intro .editorial-label","::before"),
+            footer:cssColor(".site-footer__about h2","::before")
+          };
+        });
+        const sageRgb="rgb(120,135,121)";
+        for(const [role,color] of Object.entries(sageAudit)){
+          assert.equal(color,role==="dailyBadge"?"rgb(232,238,230)":sageRgb,
+            viewport.name+" sage must be visibly implemented in "+role);
+        }
+        console.log("DARMA SAGE HOME ACCENTS PASS "+viewport.name+" / "+Object.keys(sageAudit).length+" selectors");
+      }
+      if(route==="/shop"){
+        const sageShop=await page.evaluate(()=>({
+          inner:getComputedStyle(document.querySelector(".inner-hero .editorial-label"),"::before").backgroundColor.replace(/\\s+/g,""),
+          category:getComputedStyle(document.querySelector(".collection-link:nth-child(2)"),"::before").backgroundColor.replace(/\\s+/g,"")
+        }));
+        assert.equal(sageShop.inner,"rgb(120,135,121)","Inner pages need visible sage accent");
+        assert.equal(sageShop.category,"rgb(120,135,121)","Shop category bookmark must be sage");
       }
       if(route==="/"||route==="/shop"||route==="/shop/packs"){
         await page.evaluate(()=>document.fonts.ready);
